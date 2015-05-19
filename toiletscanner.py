@@ -19,7 +19,7 @@ def main():
     GPIO.input(23)
 
     try:
-        conn = sqlite3.connect('/var/www/toiletsite/toilet.sqlite')
+        conn = sqlite3.connect('/home/pi/cil/toilet.sqlite')
         cur = conn.cursor()
     except sqlite3.Error, e:
         logger.error(e)
