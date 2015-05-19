@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "ericsson_capital";
+    src: url('fonts/ericssoncapitaltt-webfont.eot');
+    src: url('fonts/ericssoncapitaltt-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ericssoncapitaltt-webfont.woff') format('woff'),
+         url('fonts/ericssoncapitaltt-webfont.ttf') format('truetype'),
+         url('fonts/ericssoncapitaltt-webfont.svg#ericsson_capital_ttregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
