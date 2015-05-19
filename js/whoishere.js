@@ -13,6 +13,8 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
             };
 
             function queryList(members) {
+                $scope.loading = true;
+                var finished = false;
                 for (var i = 0; i < members.length; i++) {
                     (function(i) {
                         var member = members[i];
@@ -24,14 +26,21 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                             })
                             .then(function(response) {
                                 if (response.data) {
-                                    var datestring=response.data.trim();
-                                    datestring = datestring.replace(/ /g,"T");
-                                    datestring+='.000+0200';
+                                    var datestring = response.data.trim();
+                                    datestring = datestring.replace(/ /g, "T");
+                                    datestring += '.000+0200';
                                     var dateObject = new Date(datestring);
                                     members[i].seen = dateObject;
                                 }
+                                if (i == members.length - 1) {
+                                    finished = true;
+                                }
+                                if (finished) {
+                                    $scope.loading = false;
+                                }
                             }, function() {
                                 console.log('Error');
+                                $scope.loading = false;
                             });
                     })(i);
                 }
@@ -42,6 +51,7 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
             };
 
             function getTeam() {
+                $scope.loading = true;
                 $scope.teammembers = [];
                 $http.get('http://136.225.5.207/members.php', {
                     params: {
@@ -65,6 +75,7 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                 }).
                 error(function(data, status, headers, config) {
                     console.log('Error');
+                    $scope.loading = false;
                 });
             }
 
@@ -91,18 +102,20 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
 
             function readBluetooth() {
                 $scope.loading = true;
+                $scope.results = [];
                 $http.get('http://136.225.5.207/inquiry.php').
                 success(function(data, status, headers, config) {
                     $scope.loading = false;
                     data = data.trim();
-                    var results = data.split('\n');
-                    $scope.results = [];
-                    for (var i = results.length - 1; i >= 0; i--) {
-                        var member = {
-                            address: results[i],
-                            name: ''
-                        };
-                        $scope.results[$scope.results.length] = member;
+                    if (data.length > 0) {
+                        var results = data.split('\n');
+                        for (var i = results.length - 1; i >= 0; i--) {
+                            var member = {
+                                address: results[i],
+                                name: ''
+                            };
+                            $scope.results[$scope.results.length] = member;
+                        }
                     }
                 }).
                 error(function(data, status, headers, config) {
@@ -113,6 +126,11 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
 
             function addNewMembers() {
                 $scope.loading = true;
+                var finished = false;
+                if($scope.results.length===0){
+                    $scope.loading = false;
+                    $modalInstance.close();
+                }
                 for (var i = 0; i < $scope.results.length; i++) {
                     (function(i) {
                         var member = $scope.results[i];
@@ -132,6 +150,9 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                                 });
                         }
                         if (i == $scope.results.length - 1) {
+                            finished = true;
+                        }
+                        if (finished) {
                             $scope.loading = false;
                             $modalInstance.close();
                         }

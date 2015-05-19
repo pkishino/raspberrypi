@@ -47,11 +47,14 @@
     <div class="container" ng-app="whoIsHere" ng-controller="mainController">
         <div class="page-header text-center">
             <h1>CIL-Team</h1>
+            <p>
+                    <span us-spinner ng-show="loading" align='center'></span>
+            </p>
         </div>
         <div class="row team">
             <!-- <div class=""> -->
-            <div class="col-xs-4 text-center btn btn-success" ng-repeat="member in teammembers">
-                <input type="button" id="{{member.name}}-{{$index}}" ng-click="queryMember(member)" ng-hide="true">
+            <div class="col-xs-4 text-center btn btn-success" ng-repeat="member in teammembers" ng-click="queryMember(member)">
+                <input type="button" id="{{member.name}}-{{$index}}" ng-hide="true">
                 <label for="{{member.name}}-{{$index}}">{{member.name}}
                     <br>
                     <span am-time-ago="member.seen"></span>
@@ -60,11 +63,11 @@
             <!-- </div> -->
         </div>
         <p class='text-center'>
-            <a href="#" class="btn btn-primary" ng-click="queryTeam()">Query whole team</a>
-            <a href="#" class="btn btn-primary" ng-click="getTeam()">Check for new members</a>
+            <a href="#" class="btn btn-primary" ng-click="queryTeam()" ng-disabled="loading">Query whole team</a>
+            <a href="#" class="btn btn-primary" ng-click="getTeam()" ng-disabled="loading">Check for new members</a>
         </p>
         <p class='text-left'>
-            <a href="#" class="btn btn-warning" ng-click="addNewMember()">Add new member</a>
+            <a href="#" class="btn btn-warning" ng-click="addNewMember()" ng-disabled="loading">Add new member</a>
         </p>
         <script type="text/ng-template" id="newMember.html">
             <div class="modal-header">
@@ -89,7 +92,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="ok()">OK</button>
+                <button class="btn btn-primary" ng-click="ok()" ng-disabled="loading">OK</button>
                 <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
             </div>
         </script>
