@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+import sys
+import time
+import runner
+import subprocess
+
+linkfile = '/home/pi/cil/sites'
+
+
+def read_file(filepath):
+    entries = []
+    try:
+        with open(filepath, 'r') as file_line:
+            entry = file_line.read().splitlines()
+            if entry:
+                logger.info(entry)
+                entries.extend(entry)
+        return entries
+    except IOError, e:
+        raise Exception(e)
+
+
+def main():
+    sites = []
+    while True:
+        new_sites = read_file(linkfile)
+        logger.debug(new_sites)
+        diff = set(new_sites).difference(sites)
+        logger.debug(diff)
+        if diff:
+            sites = new_sites
+            logger.info('found new sites, will recreate')
+            logger.debug(sites)
+            subprocess.call(
+                ["killall", "-TERM", "chromium"])
+            time.sleep(2)
+            subprocess.call(
+                ["killall", "-9", "chromium"])
+            for site in sites:
+                logger.info("creating:" + site)
+                subprocess.Popen(
+                    ["chromium", "--kiosk", "{0}"
+                        .format(site)])
+                time.sleep(10)
+        else:
+            logger.info("Changing tab")
+            subprocess.call(
+                ["xdotool", "key", "ctrl+Tab"])
+        time.sleep(60)
+
+if __name__ == "__main__":
+    runner.setup_log('rotator')
+    logger = runner.get_logger()
+    try:
+        sys.exit(runner.run(main))
+    except Exception, e:
+        logger.info(e)
+        sys.exit(1)
