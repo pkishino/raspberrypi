@@ -61,7 +61,7 @@
                             setDate();
                             function setDate() {
                                 var currentDate = new Date();
-                                currentDate.setDate(currentDate.getDate() - 3);
+                                currentDate.setDate(currentDate.getDate() - 1);
                                 var day = currentDate.getDate();
                                 var month = currentDate.getMonth() + 1;
                                 var year = currentDate.getFullYear();
@@ -143,21 +143,21 @@
     }
     $('a[data-toggle="tab"]:first').on('show.bs.tab', function(e) {
         function dbLoaded() {
-            getDataWithID(1,2);
-            getDataWithID(2,2);
+            getDataWithID(1,0);
+            getDataWithID(2,0);
         }
         setTimeout(dbLoaded, 1000);
     });
     $('a[data-toggle="tab"]:eq(1)').on('show.bs.tab', function(e) {
         function dbLoaded() {
-            getAmount(1,2);
-            getAmount(2,2);
+            getAmount(1,0);
+            getAmount(2,0);
         }
         setTimeout(dbLoaded, 1000);
     });
     $('a[data-toggle="tab"]:eq(2)').on('show.bs.tab', function(e) {
         function dbLoaded() {
-            getAvailability(2);
+            getAvailability(0);
         }
         setTimeout(dbLoaded, 1000);
     });

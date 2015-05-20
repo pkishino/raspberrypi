@@ -98,9 +98,14 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
             $scope.cancel = function() {
                 $modalInstance.dismiss('cancel');
             };
+            $scope.rescan=function(){
+                readBluetooth();
+            }
             readBluetooth();
 
             function readBluetooth() {
+                $scope.error=false;
+                $scope.nodevice=false;
                 $scope.loading = true;
                 $scope.results = [];
                 $http.get('http://136.225.5.207/inquiry.php').
@@ -116,11 +121,12 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                             };
                             $scope.results[$scope.results.length] = member;
                         }
+                    }else{
+                        $scope.nodevice=true;
                     }
                 }).
                 error(function(data, status, headers, config) {
-                    $scope.loading = false;
-                    console.log('Error');
+                    $scope.error=true;
                 });
             }
 

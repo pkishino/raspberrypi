@@ -75,6 +75,8 @@
             </div>
             <div class="modal-body row">
                 <h3 align='center' ng-hide="loading">Visible Bluetooth devices:</h3>
+                <h4 align='center' ng-show="error">There was an error, please scan again</h4>
+                <h4 align='center' ng-show="nodevice">No device found, please set it to discoverable</h4>
                 <p>
                     <span us-spinner ng-show="loading" align='center'></span>
                 </p>
@@ -92,6 +94,7 @@
                 </table>
             </div>
             <div class="modal-footer">
+                <button class="btn btn-info" ng-click="rescan()" ng-disabled="loading">re-scan</button>
                 <button class="btn btn-primary" ng-click="ok()" ng-disabled="loading">OK</button>
                 <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
             </div>
