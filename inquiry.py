@@ -8,8 +8,10 @@
 #
 
 import bluetooth
+try:
+    nearby_devices = bluetooth.discover_devices(lookup_names=True)
 
-nearby_devices = bluetooth.discover_devices(lookup_names=True)
-
-for idx, device in enumerate(nearby_devices):
-    print ("{0}, {1}".format(device[0], device[1]))
+    for idx, device in enumerate(nearby_devices):
+        print ("{0}, {1}".format(device[0], device[1]))
+except bluetooth.btcommon.BluetoothError, e:
+    print "Error, could not communicate with bluetooth"
