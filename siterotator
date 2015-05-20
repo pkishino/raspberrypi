@@ -11,10 +11,9 @@ def read_file(filepath):
     entries = []
     try:
         with open(filepath, 'r') as file_line:
-            entry = file_line.read().splitlines()
-            if entry:
-                logger.info(entry)
-                entries.extend(entry)
+            for entry in file_line.read().splitlines():
+                refresh, value = entry.split(',')
+                entries.append((value, refresh))
         return entries
     except IOError, e:
         raise Exception(e)
@@ -22,6 +21,7 @@ def read_file(filepath):
 
 def main():
     sites = []
+    i = 0
     while True:
         new_sites = read_file(linkfile)
         logger.debug(new_sites)
@@ -29,6 +29,7 @@ def main():
         logger.debug(diff)
         if diff:
             sites = new_sites
+            i = 0
             logger.info('found new sites, will recreate')
             logger.debug(sites)
             subprocess.call(
@@ -37,15 +38,23 @@ def main():
             subprocess.call(
                 ["killall", "-9", "chromium"])
             for site in sites:
-                logger.info("creating:" + site)
+                logger.info("creating:" + site[0])
                 subprocess.Popen(
                     ["chromium", "--kiosk", "{0}"
-                        .format(site)])
+                        .format(site[0])])
+                i += 1
+                logger.info("sitenumber:" + i)
                 time.sleep(10)
         else:
             logger.info("Changing tab")
-            subprocess.call(
-                ["xdotool", "key", "ctrl+Tab"])
+            subprocess.call(["xdotool", "key", "ctrl+Tab"])
+            logger.info("sitenumber:" + i)
+            if 'yes' in sites[i][1]:
+                logger.info("refreshing")
+                subprocess.call(["xdotool", "key", "ctrl+r"])
+            if i == len(sites):
+                logger.info("reached max,back to 0")
+                i = 0
         time.sleep(60)
 
 if __name__ == "__main__":
