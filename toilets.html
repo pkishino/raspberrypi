@@ -17,6 +17,8 @@
     <script src="https://www.google.com/jsapi"></script>
     <script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['timeline']}]}"></script>
     <script src='js/graph.js'></script>
+    <script src='js/utils.js'></script>
+    <script src='js/toilets.js'></script>
 </head>
 
 <body>
@@ -41,7 +43,8 @@
     </nav>
     <div class="container">
         <div class="row">
-            <div class="col-md-12" onload="load()">
+            <div class="col-md-12">
+                <script>start()</script>
                 <h1 align='center'>Lindblad lvl 2 Toilets</h1>
                 <p class="centeredImage">
                     <img id="toilet_status_1" src='' style='width:256px;height:256px'>
@@ -57,24 +60,7 @@
                 <ul class="nav nav-tabs nav-justified" role='tablist'>
                     <li role="presentation">
                         <a href="#timeline-tab" data-toggle="tab" role='tab' aria-controls='timeline-tab' id='theTime'>
-                            <script>
-                            setDate();
-                            function setDate() {
-                                var currentDate = new Date();
-                                currentDate.setDate(currentDate.getDate() - 1);
-                                var day = currentDate.getDate();
-                                var month = currentDate.getMonth() + 1;
-                                var year = currentDate.getFullYear();
-                                if (month < 10) {
-                                    month = "0" + month;
-                                }
-                                if (day < 10) {
-                                    day = "0" + day;
-                                }
-                                var displayableDate = "Times for " + year + "-" + month + "-" + day;
-                                document.getElementById('theTime').innerHTML = displayableDate;
-                            }
-                            </script>
+                            <script>document.getElementById('theTime').innerHTML = setDate();</script>
                         </a>
                     </li>
                     <li role="presentation"><a href="#amount-tab" data-toggle="tab" role='tab' aria-controls='amount-tab'>Amount</a></li>
@@ -107,64 +93,15 @@
                             <div class='col-md-12' id="toilet-availability" style="height: 170px;"></div>
                         </div>
                     </div>
+                    <script src="js/toilets.js"></script>
                 </div>
             </div>
         </div>
         <footer>
-            <p> Page hits:<script type="text/javascript" src="http://136.225.5.101/counter.php?page=hits"></script></p>
+            <p> Page hits:<script src="counter.php?page=hits"></script></p>
             <p>&copy; CIL 2015</p>
         </footer>
     </div>
-    <script>
-    function load() {
-        readToilets(1);
-        readToilets(2);
-    }
-    var interval = setInterval(load, 1000);
-    window.onfocus = function(){
-        interval = setInterval(load, 1000);
-    }
-    window.onblur = function(){
-        clearInterval(interval);
-    }
-    
-
-    function readToilets(id) {
-        var xmlhttp = new XMLHttpRequest();
-        if (id !== undefined) {
-            xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    document.getElementById("toilet_status_" + id).src = xmlhttp.responseText;
-                }
-            };
-            xmlhttp.open("GET", "http://136.225.5.101/toiletstate.php?id=" + id, true);
-            xmlhttp.send();
-        }
-    }
-    $('a[data-toggle="tab"]:first').on('show.bs.tab', function(e) {
-        function dbLoaded() {
-            getDataWithID(1,0);
-            getDataWithID(2,0);
-        }
-        setTimeout(dbLoaded, 1000);
-    });
-    $('a[data-toggle="tab"]:eq(1)').on('show.bs.tab', function(e) {
-        function dbLoaded() {
-            getAmount(1,0);
-            getAmount(2,0);
-        }
-        setTimeout(dbLoaded, 1000);
-    });
-    $('a[data-toggle="tab"]:eq(2)').on('show.bs.tab', function(e) {
-        function dbLoaded() {
-            getAvailability(0);
-        }
-        setTimeout(dbLoaded, 1000);
-    });
-    $('#collapseStatistics').on('show.bs.collapse', function () {
-        $('a[data-toggle="tab"]:first').tab('show');
-    });
-    </script>
 </body>
 
 </html>
