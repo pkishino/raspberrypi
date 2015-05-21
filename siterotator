@@ -12,7 +12,11 @@ def read_file(filepath):
     try:
         with open(filepath, 'r') as file_line:
             for entry in file_line.read().splitlines():
-                refresh, value = entry.split(',')
+                refresh = 'no'
+                if ',' in entry:
+                    refresh, value = entry.split(',')
+                else:
+                    value = entry
                 entries.append((value, refresh))
         return entries
     except IOError, e:
@@ -29,7 +33,6 @@ def main():
         logger.debug(diff)
         if diff:
             sites = new_sites
-            i = 0
             logger.info('found new sites, will recreate')
             logger.debug(sites)
             subprocess.call(
@@ -37,24 +40,27 @@ def main():
             time.sleep(2)
             subprocess.call(
                 ["killall", "-9", "chromium"])
-            for site in sites:
+            for idx, site in enumerate(sites):
                 logger.info("creating:" + site[0])
                 subprocess.Popen(
                     ["chromium", "--kiosk", "{0}"
                         .format(site[0])])
-                i += 1
-                logger.info("sitenumber:" + i)
+                i = idx
+                logger.info("sitenumber:%s" % i)
                 time.sleep(10)
+            i += 1
         else:
-            logger.info("Changing tab")
-            subprocess.call(["xdotool", "key", "ctrl+Tab"])
-            logger.info("sitenumber:" + i)
-            if 'yes' in sites[i][1]:
-                logger.info("refreshing")
-                subprocess.call(["xdotool", "key", "ctrl+r"])
+            logger.info("Sites:%d index:%d" % (len(sites), i))
             if i == len(sites):
                 logger.info("reached max,back to 0")
                 i = 0
+            logger.info("Changing tab")
+            subprocess.call(["xdotool", "key", "ctrl+Tab"])
+            logger.info("sitenumber:%d" % i)
+            if 'yes' in sites[i][1]:
+                logger.info("refreshing")
+                subprocess.call(["xdotool", "key", "ctrl+r"])
+            i += 1
         time.sleep(60)
 
 if __name__ == "__main__":
