@@ -42,8 +42,10 @@
     </nav>
     <div ng-app='breakfast' ng-controller="mainController" class="jumbotron">
         <div class="container">
-            <h1>Breakfast responsibles</h1>
-            <h2>This week:{{week}}</h2>
+            <h2>The bringer of the great</h2>
+            <h1>friday breakfast</h1>
+            <h2>Current week:{{week}} Bringer:{{bringer}}</h2>
+            <h1 ng-show="{{days_left}}==6">thank you {{bringer}}<br> for todays feast</h1>
             <table class="table tftable" border="1">
                 <tr>
                     <th>Week</th>
@@ -58,6 +60,7 @@
                     </td>
                 </tr>
             </table>
+            <h3>Will send out reminder in {{days_left}} day{{days_left == 1 ? '' : 's'}}</h3>
         </div>
     </div>
     <footer>

@@ -1,9 +1,15 @@
 angular.module('breakfast', [])
     .controller('mainController', ['$scope', '$http',
         function($scope, $http, $modal) {
-            $scope.week=Date.prototype.getWeekNumber();
+            $scope.week = Date.prototype.getWeekNumber();
+            var diff = 4 - new Date().getDay();
+            if (diff < 0) {
+                diff += 7
+            }
+            $scope.days_left = diff;
             $scope.team = [];
             getTeam();
+
             function getTeam() {
                 $scope.team = [];
                 $http.get('../breakfast.php').
@@ -17,6 +23,9 @@ angular.module('breakfast', [])
                                 name: element[1],
                                 week: element[0]
                             };
+                            if (member.week == $scope.week) {
+                                $scope.bringer = member.name;
+                            }
                             $scope.team[$scope.team.length] = member;
                         }
                     });
