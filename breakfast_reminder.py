@@ -38,10 +38,13 @@ def main():
     members = read_file(breakfast_file)
     for idx, member in enumerate(members):
         if member.week == week and not day > 3:
+            logger.info('Sending reminder to:{0}'.format(member.name))
             msg['To'] = member.email
             s.sendmail(server_email, member.email,
                        msg.as_string())
             s.quit()
+        else:
+            logger.info('Not yet :{0}'.format(member.name))
 
 
 if __name__ == "__main__":
