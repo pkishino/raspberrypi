@@ -10,13 +10,13 @@ import runner
 def main():
     GPIO.setmode(GPIO.BCM)
     # Setup an input
-    GPIO.setup(22, GPIO.IN)
-    GPIO.input(22)
+    GPIO.setup(23, GPIO.IN)
+    GPIO.input(23)
     # Returns true or false
 
     # Setup another input
-    GPIO.setup(23, GPIO.IN)
-    GPIO.input(23)
+    GPIO.setup(24, GPIO.IN)
+    GPIO.input(24)
 
     try:
         conn = sqlite3.connect('/home/pi/cil/toilet.sqlite')
@@ -31,14 +31,14 @@ def main():
     while True:
         logger.info('Sleeping')
         sleep(1)
-        if t1_last_state != GPIO.input(22):
-            t1_last_state = GPIO.input(22)
+        if t1_last_state != GPIO.input(23):
+            t1_last_state = GPIO.input(23)
             cur.execute(statement.format(1, t1_last_state))
             conn.commit()
             logger.info("Toilet 1 light changed")
 
-        if t2_last_state != GPIO.input(23):
-            t2_last_state = GPIO.input(23)
+        if t2_last_state != GPIO.input(24):
+            t2_last_state = GPIO.input(24)
             cur.execute(statement.format(2, t2_last_state))
             conn.commit()
             logger.info("Toilet 2 light changed")
