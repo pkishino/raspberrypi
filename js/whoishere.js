@@ -11,7 +11,7 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
             $scope.queryTeam = function() {
                 queryList($scope.teammembers);
             };
-
+            setInterval($scope.queryTeam, 300000);
             function queryList(members) {
                 $scope.loading = true;
                 var finished = false;
