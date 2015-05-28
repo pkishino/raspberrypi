@@ -1,8 +1,8 @@
 21,Negin,negin.malekzadeh@ericsson.com
 22,Jim,jim.hakansson@ericsson.com
 23,Marcus,marcus.olsson@ericsson.com
-24,Tommy,tommy.stendahl@ericsson.com
-25,Carl,carl.bjerggaard@ericsson.com
+24,Carl,carl.bjerggaard@ericsson.com
+25,Tommy,tommy.stendahl@ericsson.com
 26,Nicklas,nicklas.pettersson@ericsson.com
 27,Mattias,mattias.o.nilsson@ericsson.com
 32,Kent,kent.wennerlund@ericsson.com
