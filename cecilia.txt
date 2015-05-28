@@ -1,0 +1,6 @@
+//This file contains the things cecilia(our teamassistant) will say
+//the format is as follow: day,time,repeat,text
+// e.g. to say "Good morning" on Monday at 10:00 : 0,10:00,0,"Good Morning"
+//day options are 0=Monday,1=Tuesday etc.
+//to repeat a task the options are: 0=No repeat, 1M=1 minute,2H=2 hours,3D=3 days,4W=4 weeks (1 month)
+//If you repeat weekly it will use day as the day of the week to repeat
