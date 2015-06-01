@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>CIL-Breakfast List</title>
+    <title>Cecilia</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min.js"></script>
     <script src='js/utils.js'></script>
-    <script src='js/breakfast.js'></script>
+    <script src='js/cecilia.js'></script>
 </head>
 
 <body>
@@ -36,35 +36,55 @@
                     <li><a href="index.html"><i class="glyphicon glyphicon-home"></i> Home</a></li>
                     <li><a href="toilets.html">Toilets</a></li>
                     <li><a href="whoishere.html">Who-Is-Here</a></li>
-                    <li class="active"><a href="breakfast.html">Breakfast<span class="sr-only">(current)</span></a></li>
+                    <li><a href="breakfast.html">Breakfast</a></li>
+                    <li class="active"><a href="cecilia.html">Cecilia<span class="sr-only">(current)</span></a></li>
             </div>
         </div>
     </nav>
-    <div ng-app='breakfast' ng-controller="mainController" class="jumbotron">
+    <div ng-app='cecilia' ng-controller="mainController" class="jumbotron">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2>The bringer of the great</h2>
-                    <h1>friday breakfast</h1>
-                    <h2>Current week:{{week}} Bringer:{{bringer}}</h2>
-                    <h3>Will send out reminder in {{days_left}} day{{days_left == 1 ? '' : 's'}}</h3>
-                    <h1 ng-show="{{days_left}}==6">thank you {{bringer}}<br> for todays feast</h1>
+                    This is the format used:
+                    day,time,repeat,text
+                    e.g. to say "Good morning" on Monday at 10:00 : 0;10:00;0;"Good Morning"
+                    day options are 0=Monday,1=Tuesday etc.
+                    to repeat a task the options are: 0=No repeat, 1M=1 minute,2H=2 hours,3D=3 days,4W=4 weeks (1 month)
+                    If you repeat weekly it will use day as the day of the week to repeat
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
-                    <table class="table tftable" border="1">
+                    <table class="table table-striped table-bordered">
                         <tr>
-                            <th>Week</th>
-                            <th>Responsible</th>
+                            <th>Day</th>
+                            <th>Time</th>
+                            <th>Repeat</th>
+                            <th>Text</th>
                         </tr>
-                        <tr ng-repeat="member in team" ng-class="{'special':{{week}} == {{member.week}}}">
-                            <td>
-                                {{member.week}}
-                            </td>
-                            <td>
-                                {{member.name}}
-                            </td>
+                        <tr ng-repeat="item in model.items" ng-include="getTemplate(item)">
                         </tr>
                     </table>
+                    <script type="text/ng-template" id="display">
+                        <td>{{item.day}}</td>
+                        <td>{{item.time}}</td>
+                        <td>{{item.repeat}}</td>
+                        <td>{{item.text}}</td>
+                        <td>
+                            <button ng-click="editItem(item)">Edit</button>
+                        </td>
+                    </script>
+                    <script type="text/ng-template" id="edit">
+                        <td><input type="text" ng-model="model.selected.day" /></td>
+                        <td><input type="text" ng-model="model.selected.time" /></td>
+                        <td><input type="text" ng-model="model.selected.repeat" /></td>
+                        <td><input type="text" ng-model="model.selected.text" /></td>
+                        <td>
+                            <button ng-click="deleteItem($index)">Delete</button>
+                            <button ng-click="saveItem($index)">Save</button>
+                            <button ng-click="reset()">Cancel</button>
+                        </td>
+                    </script>
                 </div>
             </div>
         </div>
