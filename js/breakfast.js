@@ -1,10 +1,10 @@
 angular.module('breakfast', [])
     .controller('mainController', ['$scope', '$http',
-        function($scope, $http, $modal) {
+        function ($scope, $http, $modal) {
             $scope.week = Date.prototype.getWeekNumber();
             var diff = 4 - new Date().getDay();
             if (diff < 0) {
-                diff += 7
+                diff += 7;
             }
             $scope.days_left = diff;
             $scope.team = [];
@@ -13,9 +13,9 @@ angular.module('breakfast', [])
             function getTeam() {
                 $scope.team = [];
                 $http.get('../breakfast.php').
-                success(function(data, status, headers, config) {
+                success(function (data, status, headers, config) {
                     data = data.split('\n');
-                    data.forEach(function(element, index) {
+                    data.forEach(function (element, index) {
                         element = element.trim();
                         if (element !== "") {
                             element = element.split(',');
@@ -30,7 +30,7 @@ angular.module('breakfast', [])
                         }
                     });
                 }).
-                error(function(data, status, headers, config) {
+                error(function (data, status, headers, config) {
                     console.log('Error');
                 });
             }

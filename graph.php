@@ -3,7 +3,11 @@
   $offset_end = $offset + 1;
   if(isset($_REQUEST['id'])){
       $id = $_REQUEST['id'];
-      $statement="SELECT timestamp, state FROM toilet_data WHERE id = ".$id." AND timestamp BETWEEN date('now','-".$offset_end." day') AND date('now', '-".$offset." day') ORDER BY timestamp";
+      if($offset >= 0){
+        $statement="SELECT timestamp, state FROM toilet_data WHERE id = ".$id." AND timestamp BETWEEN date('now','-".$offset_end." day') AND date('now', '-".$offset." day') ORDER BY timestamp";
+      }else{
+       $statement="SELECT timestamp, state FROM toilet_data WHERE id = ".$id." AND timestamp > date('now') ORDER BY timestamp"; 
+      }
   }else{
       $statement="SELECT timestamp, state FROM toilet_data WHERE timestamp BETWEEN date('now','-".$offset_end." day') AND date('now', '-".$offset." day') ORDER BY timestamp";
   }

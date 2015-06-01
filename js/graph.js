@@ -4,21 +4,21 @@ google.load("visualization", "1", {
 
 function get_data(offset, callback, id) {
     var xhr = new XMLHttpRequest();
-    if(typeof(id)!=='undefined'){
+    if (typeof (id) !== 'undefined') {
         xhr.open('GET', 'http://136.225.5.101/graph.php?offset=' + offset + "&id=" + id, true);
-    }else{
+    } else {
         xhr.open('GET', 'http://136.225.5.101/graph.php?offset=' + offset, true);
     }
 
-    xhr.onload = function(e) {
+    xhr.onload = function (e) {
         callback(this.response);
-    }
+    };
     xhr.send();
 }
 
 
 function getDataWithID(id, offset) {
-    var offset = typeof offset !== 'undefined' ? offset : 0;
+    offset = typeof offset !== 'undefined' ? offset : 0;
     var options = {
         colors: ['#00A9D4', '#5fbadd', '#f0f1f1'],
         timeline: {
@@ -34,26 +34,26 @@ function getDataWithID(id, offset) {
             }
         }
     };
-    var data = createDataTable(id, offset, function(data){
+    var data = createDataTable(id, offset, function (data) {
         if (data.getNumberOfRows() > 0) {
             drawChart(data, 'toilet' + id, options);
         } else {
             console.error("No Data collected yet");
         }
     });
-    
+
 }
 
 function getAmount(id, offset) {
-    var offset = typeof offset !== 'undefined' ? offset : 0;
-    var data = createDataTable(id, offset, function(data){
+    offset = typeof offset !== 'undefined' ? offset : 0;
+    var data = createDataTable(id, offset, function (data) {
         var amount = data.getNumberOfRows();
         drawAmountData(amount, id);
-    }); 
+    });
 }
 
 function getAvailability(offset) {
-    var offset = typeof offset !== 'undefined' ? offset : 0;
+    offset = typeof offset !== 'undefined' ? offset : 0;
     var options = {
         colors: ['#00A9D4', '#E32119', '#f0f1f1'],
         avoidOverlappingGridLines: true,
@@ -65,16 +65,16 @@ function getAvailability(offset) {
             }
         }
     };
-    var data = createAvailabilityData(offset,function(data){
-       if (data.getNumberOfRows() > 0) {
+    var data = createAvailabilityData(offset, function (data) {
+        if (data.getNumberOfRows() > 0) {
             drawChart(data, 'toilet-availability', options);
         } else {
             console.error("No Data collected yet");
-        } 
+        }
     });
 }
 
-function createDataTable(id, offset,callback) {
+function createDataTable(id, offset, callback) {
 
     var dataTable = new google.visualization.DataTable();
     dataTable.addColumn({
@@ -91,15 +91,17 @@ function createDataTable(id, offset,callback) {
     });
 
     var startDate = '';
-    get_data(offset, function(data) {
+    get_data(offset, function (data) {
         var rows = data.split(';');
-        rows.forEach(function(element, index) {
-            var array = element.split(','), timestamp=array[0],state=array[1];
+        rows.forEach(function (element, index) {
+            var array = element.split(','),
+                timestamp = array[0],
+                state = array[1];
             if (state == 1) {
                 startDate = dateFromUTC(timestamp, '-');
-            } else if (timestamp){
+            } else if (timestamp) {
                 endDate = dateFromUTC(timestamp, '-');
-                if (startDate != '') {
+                if (startDate !== '') {
                     dataTable.addRows([
                         ['toilet:' + id, new Date(startDate), new Date(endDate)]
                     ]);
@@ -111,12 +113,12 @@ function createDataTable(id, offset,callback) {
     }, id);
 }
 
-function createAvailabilityData(offset,callback) {
+function createAvailabilityData(offset, callback) {
     var dataTable = new google.visualization.DataTable();
     dataTable.addColumn({
         type: 'string',
         id: 'Row'
-    })
+    });
     dataTable.addColumn({
         type: 'string',
         id: 'Toilet'
@@ -135,32 +137,34 @@ function createAvailabilityData(offset,callback) {
     var startDate = '';
     var endDate = '';
 
-    get_data(offset, function(data) {
+    get_data(offset, function (data) {
         var rows = data.split(';');
-        rows.forEach(function(element, index) {
-            var array = element.split(','), timestamp=array[0],state=array[1];
+        rows.forEach(function (element, index) {
+            var array = element.split(','),
+                timestamp = array[0],
+                state = array[1];
             if (state == 1) {
-                if (startDate != '') {
+                if (startDate !== '') {
                     endDate = dateFromUTC(timestamp, '-');
                     dataTable.addRows([
                         ['Row', 'One in use', new Date(startDate), new Date(endDate)]
                     ]);
                 }
                 startDate = dateFromUTC(timestamp, '-');
-            } else if (timestamp){
-                if (endDate != '') {
+            } else if (timestamp) {
+                if (endDate !== '') {
                     endDate = dateFromUTC(timestamp, '-');
                     dataTable.addRows([
                         ['Row', 'Two in use', new Date(startDate), new Date(endDate)]
                     ]);
                     startDate = endDate;
                     endDate = '';
-                } else if (startDate != '') {
+                } else if (startDate !== '') {
                     endDate = dateFromUTC(timestamp, '-');
                     dataTable.addRows([
                         ['Row', 'One in use', new Date(startDate), new Date(endDate)]
                     ]);
-                    endDate = startDate = ''
+                    endDate = startDate = '';
                 }
             }
         });
