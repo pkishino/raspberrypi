@@ -6,3 +6,5 @@
 //If you repeat weekly it will use day as the day of the week to repeat
 0 12:45 1D "ATTENTION:seal team assemble! it's time for the daily standup"
 0 09:00 1D "It's 9 o'clock everybody, time to get cracking"
+0 19:00 0 "http://songily.com/sc/file/188339659.mp3"
+

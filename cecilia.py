@@ -14,7 +14,13 @@ cecilia_file = '/home/pi/cil/cecilia.txt'
 
 def say(text):
     logger.info(text)
-    status = os.system('/usr/bin/say "{0}" \
+    if text.endswith('.mp3'):
+        status = os.system('/usr/bin/say "{0}" \
+        > /tmp/cecilia-say.log 2>&1'.format('Time for some wicked music!'))
+        status = os.system('mplayer {0} > /tmp/cecilia-say.log 2>&1'
+                           .format(text))
+    else:
+        status = os.system('/usr/bin/say "{0}" \
         > /tmp/cecilia-say.log 2>&1'.format(text))
     logger.info(status)
 
@@ -24,7 +30,7 @@ def read_file(filepath):
     try:
         with open(filepath, 'r') as file_line:
             for entry in file_line.read().splitlines():
-                if '//' not in entry:
+                if not entry.startswith('//') and len(entry) > 0:
                     day, time, repeat, text = shlex.split(entry)
                     item = Item(int(day), time, repeat, text)
                     logger.info('Read text:{}'.format(item))
