@@ -14,12 +14,27 @@ angular.module('cecilia', [])
 
             $scope.saveItem = function (idx) {
                 console.log("Saving item");
+                commitItem($scope.model.items[idx], $scope.model.selected);
                 $scope.model.items[idx] = angular.copy($scope.model.selected);
                 $scope.reset();
+
             };
 
             $scope.deleteItem = function (idx) {
+                deleteItem($scope.model.items[idx]);
                 $scope.model.items.splice(idx, 1);
+            };
+
+            $scope.addItem = function () {
+                var idx = $scope.model.items.length + 1;
+                $scope.model.items.push({
+                    id: idx,
+                    day: 0,
+                    time: '00:00',
+                    repeat: 0,
+                    text: 'Placeholder'
+                });
+                $scope.editItem($scope.model.items[idx]);
             };
 
             $scope.reset = function () {
@@ -52,6 +67,44 @@ angular.module('cecilia', [])
                 error(function (data, status, headers, config) {
                     console.log('Error');
                 });
+            }
+
+            function commitItem(olditem, newitem) {
+                $http.get('http://136.225.5.207/cecilia.php', {
+                        params: {
+                            cmd: 'save',
+                            day: newitem.day,
+                            time: newitem.time,
+                            repeat: newitem.repeat,
+                            text: newitem.text,
+                            old_day: olditem.day,
+                            old_time: olditem.time,
+                            old_repeat: olditem.repeat,
+                            old_text: olditem.text
+                        }
+                    })
+                    .then(function (response) {
+                        console.log(response);
+                    }, function () {
+                        console.log('Error');
+                    });
+            }
+
+            function deleteItem(item) {
+                $http.get('http://136.225.5.207/cecilia.php', {
+                        params: {
+                            cmd: 'delete',
+                            day: item.day,
+                            time: item.time,
+                            repeat: item.repeat,
+                            text: item.text
+                        }
+                    })
+                    .then(function (response) {
+                        console.log(response);
+                    }, function () {
+                        console.log('Error');
+                    });
             }
         }
     ]);

@@ -65,6 +65,10 @@
                         <tr ng-repeat="item in model.items" ng-include="getTemplate(item)">
                         </tr>
                     </table>
+                    <button type="button" ng-click="addItem()" class="btn btn-sm btn-success">
+                        <i class="glyphicon glyphicon-plus">
+                        </i> Add new Row
+                    </button>
                     <script type="text/ng-template" id="display">
                         <td>{{item.day}}</td>
                         <td>{{item.time}}</td>
