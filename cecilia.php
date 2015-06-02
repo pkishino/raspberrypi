@@ -23,7 +23,7 @@ if (isset($_REQUEST['cmd'])) {
         if ($locked) {
             echo "Updating file now with: " . $text;
             if ($cmd == 'save') {
-                $save = $day . ' ' . $time . ' ' . $repeat . ' ' . $text;
+                $save = $day . ' ' . $time . ' ' . $repeat . ' "' . $text . '"' . "\n";
                 echo $save;
                 if (isset($_REQUEST['old_day'])) {
                     $old_day = $_REQUEST['old_day'];
@@ -32,7 +32,7 @@ if (isset($_REQUEST['cmd'])) {
                     $old_text = $_REQUEST['old_text'];
                     $contents = file_get_contents($ceciliatext);
                     $quote = preg_quote($old_day . ' ' . $old_time . ' ' . $old_repeat .
-                        ' ' . $old_text);
+                        ' "' . $old_text . '"');
                     echo $quote;
                     $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', $save, $contents);
                     file_put_contents($ceciliatext, $contents);
@@ -41,7 +41,7 @@ if (isset($_REQUEST['cmd'])) {
                 }
             } elseif ($cmd == 'delete') {
                 $contents = file_get_contents($ceciliatext);
-                $quote = preg_quote($day . ' ' . $time . ' ' . $repeat . ' ' . $text, '/');
+                $quote = preg_quote($day . ' ' . $time . ' ' . $repeat . ' "' . $text . '"', '/');
                 echo $quote;
                 $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', '', $contents);
                 echo $contents;
