@@ -1,108 +1,107 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CIL-Toilet assistant</title>
-    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-    <link href="css/site.css" rel="stylesheet">
-    <link href="css/fonts.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="https://www.google.com/jsapi"></script>
-    <script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['timeline']}]}"></script>
-    <script src='js/graph.js'></script>
-    <script src='js/utils.js'></script>
-    <script src='js/toilets.js'></script>
-</head>
-
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CIL-Toilet assistant</title>
+        <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <link href="css/site.css" rel="stylesheet">
+        <link href="css/fonts.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://www.google.com/jsapi"></script>
+        <script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['timeline']}]}"></script>
+        <script src='js/graph.js'></script>
+        <script src='js/utils.js'></script>
+        <script src='js/toilets.js'></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">CIL-Assistant</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.html"><i class="glyphicon glyphicon-home"></i> Home</a></li>
-                    <li class="active"><a href="toilets.html">Toilets<span class="sr-only">(current)</span></a></li>
-                    <li><a href="whoishere.html">Who-Is-Here</a></li>
-                    <li><a href="breakfast.html">Breakfast</a></li>
-            </div>
-        </div>
-    </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <script>start()</script>
-                <h1 align='center'>Lindblad lvl 2 Toilets</h1>
-                <p class="centeredImage">
-                    <img id="toilet_status_1" src='' style='width:256px;height:256px'>
-                    <img id="toilet_status_2" src='' style='width:256px;height:256px'>
-                </p>
-            </div>
-        </div>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseStatistics" aria-expanded="false" aria-controls="collapseStatistics">
-            Statistics
-        </button>
-        <div class="collape">
-            <div class="well collapse" id="collapseStatistics">
-                <ul class="nav nav-tabs nav-justified" role='tablist'>
-                    <li role="presentation">
-                        <a href="#timeline-tab" data-toggle="tab" role='tab' aria-controls='timeline-tab' id='theTime'>
-                            <script>document.getElementById('theTime').innerHTML = setDate();</script>
-                        </a>
-                    </li>
-                    <li role="presentation"><a href="#amount-tab" data-toggle="tab" role='tab' aria-controls='amount-tab'>Amount</a></li>
-                    <li role="presentation"><a href="#availability-tab" data-toggle="tab" role='tab' aria-controls='availability-tab'>Availability</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane" id="timeline-tab" role='tabpanel'>
-                        <div class="row">
-                            <h1>Left Toilet</h1>
-                            <div class='col-md-12' id="toilet1" style="height: 170px;"></div>
-                        </div>
-                        <div class="row">
-                            <h1>Right Toilet</h1>
-                            <div class='col-md-12' id="toilet2" style="height: 170px;"></div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="amount-tab" role='tabpanel'>
-                        <div class="row">
-                            <h1>Left Toilet</h1>
-                            <h2 id="toilet_total1"></h2>
-                        </div>
-                        <div class="row">
-                            <h1>Right Toilet</h1>
-                            <h2 id="toilet_total2"></h2>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="availability-tab" role='tabpanel'>
-                        <div class="row">
-                            <h1>Combined availability</h1>
-                            <div class='col-md-12' id="toilet-availability" style="height: 170px;"></div>
-                        </div>
-                    </div>
-                    <script src="js/toilets.js"></script>
+                    </button>
+                    <a class="navbar-brand" href="#">CIL-Assistant</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                        <li class="active"><a href="toilets.html">Toilets<span class="sr-only">(current)</span></a></li>
+                        <li><a href="whoishere.html">Who-Is-Here</a></li>
+                        <li><a href="breakfast.html">Breakfast</a></li>
+                        <li><a href="cecilia.html">Cecilia</a></li>
+                    </ul>
                 </div>
             </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <script>start()</script>
+                    <h1 align='center'>Lindblad lvl 2 Toilets</h1>
+                    <p class="centeredImage">
+                        <img id="toilet_status_1" src='' style='width:256px;height:256px'>
+                        <img id="toilet_status_2" src='' style='width:256px;height:256px'>
+                    </p>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseStatistics" aria-expanded="false" aria-controls="collapseStatistics">
+            Statistics
+            </button>
+            <div class="collape">
+                <div class="well collapse" id="collapseStatistics">
+                    <ul class="nav nav-tabs nav-justified" role='tablist'>
+                        <li role="presentation">
+                            <a href="#timeline-tab" data-toggle="tab" role='tab' aria-controls='timeline-tab' id='theTime'>
+                                <script>document.getElementById('theTime').innerHTML = setDate();</script>
+                            </a>
+                        </li>
+                        <li role="presentation"><a href="#amount-tab" data-toggle="tab" role='tab' aria-controls='amount-tab'>Amount</a></li>
+                        <li role="presentation"><a href="#availability-tab" data-toggle="tab" role='tab' aria-controls='availability-tab'>Availability</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="timeline-tab" role='tabpanel'>
+                            <div class="row">
+                                <h1>Left Toilet</h1>
+                                <div class='col-md-12' id="toilet1" style="height: 170px;"></div>
+                            </div>
+                            <div class="row">
+                                <h1>Right Toilet</h1>
+                                <div class='col-md-12' id="toilet2" style="height: 170px;"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="amount-tab" role='tabpanel'>
+                            <div class="row">
+                                <h1>Left Toilet</h1>
+                                <h2 id="toilet_total1"></h2>
+                            </div>
+                            <div class="row">
+                                <h1>Right Toilet</h1>
+                                <h2 id="toilet_total2"></h2>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="availability-tab" role='tabpanel'>
+                            <div class="row">
+                                <h1>Combined availability</h1>
+                                <div class='col-md-12' id="toilet-availability" style="height: 170px;"></div>
+                            </div>
+                        </div>
+                        <script src="js/toilets.js"></script>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <p> Page hits:<script src="counter.php?page=hits"></script></p>
+                <p>&copy; CIL 2015</p>
+            </footer>
         </div>
-        <footer>
-            <p> Page hits:<script src="counter.php?page=hits"></script></p>
-            <p>&copy; CIL 2015</p>
-        </footer>
-    </div>
-</body>
-
+    </body>
 </html>

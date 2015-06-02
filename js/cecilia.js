@@ -1,6 +1,7 @@
 angular.module('cecilia', [])
     .controller('mainController', ['$scope', '$http',
         function ($scope, $http) {
+            $scope.adding = false;
             getText();
             // gets the template to ng-include for a table row / item
             $scope.getTemplate = function (item) {
@@ -14,19 +15,27 @@ angular.module('cecilia', [])
 
             $scope.saveItem = function (idx) {
                 console.log("Saving item");
-                commitItem($scope.model.items[idx], $scope.model.selected);
+                if ($scope.adding === true) {
+                    addItem($scope.model.selected);
+                } else {
+                    commitItem($scope.model.items[idx], $scope.model.selected);
+                }
                 $scope.model.items[idx] = angular.copy($scope.model.selected);
+                $scope.adding = false;
                 $scope.reset();
 
             };
 
             $scope.deleteItem = function (idx) {
-                deleteItem($scope.model.items[idx]);
+                if ($scope.adding === false) {
+                    deleteItem($scope.model.items[idx]);
+                }
+                $scope.adding = false;
                 $scope.model.items.splice(idx, 1);
             };
 
             $scope.addItem = function () {
-                var idx = $scope.model.items.length + 1;
+                var idx = $scope.model.items.length;
                 $scope.model.items.push({
                     id: idx,
                     day: 0,
@@ -34,12 +43,33 @@ angular.module('cecilia', [])
                     repeat: 0,
                     text: 'Placeholder'
                 });
+                $scope.adding = true;
                 $scope.editItem($scope.model.items[idx]);
             };
 
             $scope.reset = function () {
+                if ($scope.adding === true) {
+                    $scope.deleteItem($scope.model.selected.id);
+                }
                 $scope.model.selected = {};
             };
+
+            $scope.playItem = function (item) {
+                playItem(item);
+            };
+
+            function playItem(item) {
+                $http.get('http://136.225.5.207/cecilia.php', {
+                        params: {
+                            say: item.text
+                        }
+                    })
+                    .then(function (response) {
+                        console.log(response);
+                    }, function () {
+                        console.log('Error');
+                    });
+            }
 
             function getText() {
                 $scope.model = {
@@ -58,15 +88,32 @@ angular.module('cecilia', [])
                                 day: element[0],
                                 time: element[1],
                                 repeat: element[2],
-                                text: element.slice(3, element.length).join(" ")
+                                text: element.slice(3, element.length).join(" ").replace(/^"?(.+?)"?$/, '$1')
                             };
-                            $scope.model.items[$scope.model.items.length] = item;
+                            $scope.model.items.push(item);
                         }
                     });
                 }).
                 error(function (data, status, headers, config) {
                     console.log('Error');
                 });
+            }
+
+            function addItem(newitem) {
+                $http.get('http://136.225.5.207/cecilia.php', {
+                        params: {
+                            cmd: 'save',
+                            day: newitem.day,
+                            time: newitem.time,
+                            repeat: newitem.repeat,
+                            text: newitem.text
+                        }
+                    })
+                    .then(function (response) {
+                        console.log(response);
+                    }, function () {
+                        console.log('Error');
+                    });
             }
 
             function commitItem(olditem, newitem) {
