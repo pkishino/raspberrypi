@@ -7,9 +7,18 @@ import runner
 from collections import namedtuple
 import schedule
 import time
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
-Item = namedtuple('Item', 'day time repeat text')
 cecilia_file = '/home/pi/cil/cecilia.txt'
+Item = namedtuple('Item', 'day time repeat text')
+
+
+class MyHandler(FileSystemEventHandler):
+    def on_modified(self, event):
+        logger.info(event.src_path)
+        if cecilia_file in event.src_path:
+            setup_schedule()
 
 
 def say(text):
@@ -75,7 +84,8 @@ def schedule_day_job(item, job):
         schedule.every().sunday.at(item.time).do(job, item.text)
 
 
-def main():
+def setup_schedule():
+    logger.info('Setting up new schedule')
     schedule.clear()
     day = datetime.datetime.today().weekday()
     logger.info("Current Day:{0}".format(day))
@@ -85,9 +95,18 @@ def main():
             schedule_repeat(item)
         else:
             schedule_day_job(item, single_say)
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+
+
+def main():
+    if len(sys.argv) == 2:
+        logger.info('Playing single say')
+        say(sys.argv[1])
+    else:
+        event_handler = MyHandler()
+        observer = Observer()
+        observer.schedule(event_handler, path='/home/pi/cil', recursive=True)
+        observer.start()
+        observer.join()
 
 
 if __name__ == "__main__":

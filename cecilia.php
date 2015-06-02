@@ -9,6 +9,16 @@ $ceciliatext = '/home/pi/cil/cecilia.txt';
 if (!file_exists($ceciliatext)) {
     die('ERROR: ceciliatext file not found.');
 }
+if (isset($_REQUEST['say'])) {
+    $say = $_REQUEST['say'];
+    $command = escapeshellcmd('/home/pi/cil/cecilia.py ');
+    $output = shell_exec($command . escapeshellarg($say));
+    if (strpos($output, 'Error') !== false) {
+        http_response_code(500);
+    }
+    echo $output;
+    exit();
+}
 if (isset($_REQUEST['cmd'])) {
     $cmd = $_REQUEST['cmd'];
     $day = $_REQUEST['day'];
@@ -54,6 +64,7 @@ if (isset($_REQUEST['cmd'])) {
         // Release file lock and close file handle
         flock($fp, LOCK_UN);
         fclose($fp);
+        exit();
     } else {
         die("ERROR: <b>Not writable.</b> PHP needs permission to write to file $ceciliatext");
     }
@@ -63,4 +74,5 @@ if (isset($_REQUEST['cmd'])) {
             echo $line;
         }
     }
+    exit();
 }
