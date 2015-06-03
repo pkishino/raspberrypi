@@ -28,7 +28,7 @@ if (isset($_REQUEST['cmd'])) {
                     $contents = file_get_contents($rotatortext);
                     $quote = preg_quote($old_refresh . ',"' . $old_url . '"');
                     echo $quote;
-                    $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', preg_quote($save, '/'), $contents);
+                    $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', $contents);
                     file_put_contents($rotatortext, $contents);
                 } else {
                     file_put_contents($rotatortext, $save, FILE_APPEND);

@@ -42,9 +42,9 @@ if (isset($_REQUEST['cmd'])) {
                     $old_text = $_REQUEST['old_text'];
                     $contents = file_get_contents($ceciliatext);
                     $quote = preg_quote($old_day . ' ' . $old_time . ' ' . $old_repeat .
-                        ' "' . $old_text . '"');
+                        ' "' . $old_text . '"', '/');
                     echo $quote;
-                    $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', $save, $contents);
+                    $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', $contents);
                     file_put_contents($ceciliatext, $contents);
                 } else {
                     file_put_contents($ceciliatext, $save, FILE_APPEND);
