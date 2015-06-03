@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Cecilia</title>
+        <title>Site-Rotator</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,8 +34,8 @@
                         <li><a href="toilets.html">Toilets</a></li>
                         <li><a href="whoishere.html">Who-Is-Here</a></li>
                         <li><a href="breakfast.html">Breakfast</a></li>
-                        <li><a href="cecilia.html">Cecilia</a></li>
-                        <li class="active"><a href="rotator.html">Rotator<span class="sr-only">(current)</span></a></li>
+                        <li><a href="cecilia.html">CeCILia</a></li>
+                        <li class="active"><a href="rotator.html">Site-Rotator<span class="sr-only">(current)</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -44,7 +44,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                    <h2>List of sites that the rotator uses on the tv</h2>
+                        <h2>List of sites that the rotator uses on the tv</h2>
                         This is the format used:
                         refresh,url
                         e.g. to have the site http://www.google.com added to list:
@@ -56,9 +56,9 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="col-md-2">Refresh</th>
-                                    <th class="col-md-4">URL</th>
-                                    <th class="col-md-4">Action</th>
+                                    <th class="col-md-1">Refresh</th>
+                                    <th class="col-md-8">URL</th>
+                                    <th class="col-md-3">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,7 +70,9 @@
                         <i class="glyphicon glyphicon-plus"></i> Add new Row
                         </button>
                         <script type="text/ng-template" id="display">
-                        <td>{{site.refresh}}</td>
+                        <td>
+                            <input type="checkbox" disabled="disabled" ng-checked="{{site.refresh}}"/>
+                        </td>
                         <td>{{site.url}}</td>
                         <td>
                             <button class="btn btn-sm btn-info" ng-click="editSite(site)">

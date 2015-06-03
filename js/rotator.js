@@ -63,10 +63,10 @@ angular.module('rotator', [])
                     data.forEach(function (element, index) {
                         element = element.trim();
                         if (element !== "") {
-                            element = element.split(" ");
+                            element = element.split(",");
                             var site = {
                                 id: index,
-                                refresh: valueOf(element[0]),
+                                refresh: element[0] === 'yes',
                                 url: element[1]
                             };
                             $scope.model.sites.push(site);
