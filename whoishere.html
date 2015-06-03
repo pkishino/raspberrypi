@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CIL-Toilet assistant</title>
+        <title>CIL-assistant</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </nav>
-        <div class="jumbotron container" ng-app="whoIsHere" ng-controller="mainController">
+        <div class="container" ng-app="whoIsHere" ng-controller="mainController">
             <div class="page-header text-center">
                 <h1>CIL-Team</h1>
                 <p>
@@ -54,21 +54,28 @@
             </div>
             <div class="row team">
                 <!-- <div class=""> -->
-                <div class="col-xs-4 text-center btn btn-success" ng-repeat="member in teammembers" ng-click="queryMember(member)">
+                <div class="col-xs-4 text-center btn" ng-class="getDiff(member)" ng-repeat="member in teammembers" ng-click="queryMember(member)">
                     <input type="button" id="{{member.name}}-{{$index}}" ng-hide="true">
                     <label for="{{member.name}}-{{$index}}">{{member.name}}
                         <br>
-                        <span am-time-ago="member.seen"></span>
+                        <span am-time-ago="member.seen" ></span>
                     </label>
                 </div>
                 <!-- </div> -->
             </div>
-            <p class='text-center'>
-                <a href="#" class="btn btn-primary" ng-click="queryTeam()" ng-disabled="loading">Query whole team</a>
-                <a href="#" class="btn btn-primary" ng-click="getTeam()" ng-disabled="loading">Check for new members</a>
-            </p>
+            
             <p class='text-left'>
-                <a href="#" class="btn btn-warning" ng-click="addNewMember()" ng-disabled="loading">Add new member</a>
+                <div class="btn-group" role="group" aria-label="">
+                    <button type="button" ng-click="queryTeam()" ng-disabled="loading" class="btn btn-sm btn-primary">
+                    <i class="glyphicon glyphicon-refresh"></i> Query whole team
+                    </button>
+                    <button type="button" ng-click="getTeam()" ng-disabled="loading" class="btn btn-sm btn-info">
+                    <i class="glyphicon glyphicon-search"></i> Check for new members
+                    </button>
+                    <button type="button" ng-click="addNewMember()" ng-disabled="loading" class="btn btn-sm btn-success">
+                    <i class="glyphicon glyphicon-plus"></i> Add new member
+                    </button>
+                </div>
             </p>
             <script type="text/ng-template" id="newMember.html">
             <div class="modal-header">
@@ -95,9 +102,14 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-info" ng-click="rescan()" ng-disabled="loading">re-scan</button>
-                <button class="btn btn-primary" ng-click="ok()" ng-disabled="loading">OK</button>
-                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                <div class="btn-group" role="group" aria-label="">
+                    <button class="btn btn-info" ng-click="rescan()" ng-disabled="loading">
+                    <i class="glyphicon glyphicon-refresh"></i> Re-scan</button>
+                    <button class="btn btn-primary" ng-click="ok()" ng-disabled="loading">
+                    <i class="glyphicon glyphicon-ok"></i> OK</button>
+                    <button class="btn btn-warning" ng-click="cancel()">
+                    <i class="glyphicon glyphicon-remove"></i> Cancel</button>
+                </div>
             </div>
             </script>
         </div>

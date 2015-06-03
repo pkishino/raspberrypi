@@ -28,10 +28,14 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                             .then(function (response) {
                                 if (response.data) {
                                     var datestring = response.data.trim();
-                                    datestring = datestring.replace(/ /g, "T");
-                                    datestring += '.000+0200';
-                                    var dateObject = new Date(datestring);
-                                    members[i].seen = dateObject;
+                                    if (datestring == 'never') {
+                                        members[i].seen = new Date(0);
+                                    } else {
+                                        datestring = datestring.replace(/ /g, "T");
+                                        datestring += '.000+0200';
+                                        var dateObject = new Date(datestring);
+                                        members[i].seen = dateObject;
+                                    }
                                 }
                                 if (i == members.length - 1) {
                                     finished = true;
@@ -88,6 +92,23 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                 modalInstance.result.then(function () {
                     getTeam();
                 });
+            };
+
+            $scope.getDiff = function (member) {
+                var diff = moment(member.seen).fromNow(true);
+                if (diff.indexOf('year') > -1 || diff.indexOf('month') > -1) {
+                    return 'btn-default';
+                } else if (diff.indexOf("day") > -1) {
+                    return 'btn-danger';
+                } else if (diff.indexOf('hour') > -1) {
+                    return 'btn-warning';
+                } else if (diff.indexOf('minutes') > -1) {
+                    var time = valueOf(diff.split(' ')[0]);
+                    if (time > 10) {
+                        return 'btn-info';
+                    }
+                }
+                return 'btn-success';
             };
         }
     ])
