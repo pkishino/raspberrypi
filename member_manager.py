@@ -35,9 +35,13 @@ def last_seen(name, conn, cur):
     statement = "select time from person_status where name = '{0}' \
                  order by time desc limit 1".format(name)
     cur.execute(statement)
-    for row in cur.fetchall():
+    values = cur.fetchall()
+    if len(values) == 0:
+        print 'never'
+        logger.info(name+':never')
+    for row in values:
         print row[0]
-        logger.info(row[0])
+        logger.info(name+':'+row[0])
 
 
 def fetch_team(conn, cur):

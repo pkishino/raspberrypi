@@ -8,13 +8,13 @@ from collections import namedtuple
 import schedule
 import time
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+from watchdog.events import PatternMatchingEventHandler
 
 cecilia_file = '/home/pi/cil/cecilia.txt'
 Item = namedtuple('Item', 'day time repeat text')
 
 
-class MyHandler(FileSystemEventHandler):
+class MyHandler(PatternMatchingEventHandler):
     def on_modified(self, event):
         logger.info(event.src_path)
         if cecilia_file in event.src_path:
@@ -25,9 +25,13 @@ def say(text):
     logger.info(text)
     if text.endswith('.mp3'):
         status = os.system('/usr/bin/say "{0}" \
-        > /tmp/cecilia-say.log 2>&1'.format('Time for some wicked music!'))
+        > /tmp/cecilia-say.log 2>&1'
+                           .format('Listen up! Time for some wicked tunes!'))
         status = os.system('mplayer {0} > /tmp/cecilia-say.log 2>&1'
                            .format(text))
+        status = os.system('/usr/bin/say "{0}" \
+        > /tmp/cecilia-say.log 2>&1'
+                           .format('Ok, back to work again'))
     else:
         status = os.system('/usr/bin/say "{0}" \
         > /tmp/cecilia-say.log 2>&1'.format(text))
@@ -102,10 +106,11 @@ def main():
         logger.info('Playing single say')
         say(sys.argv[1])
     else:
-        event_handler = MyHandler()
+        event_handler = MyHandler(patterns=[cecilia_file])
         observer = Observer()
         observer.schedule(event_handler, path='/home/pi/cil', recursive=True)
         observer.start()
+        setup_schedule()
         observer.join()
 
 
