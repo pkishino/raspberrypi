@@ -25,7 +25,8 @@ def read_file(filepath):
                 refresh, value = entry.split(',')
             else:
                 value = entry
-            entries.append((value, refresh))
+            if entry != '':
+                entries.append((value, refresh))
     return entries
 
 
@@ -62,6 +63,7 @@ def setup_rotate():
                 i = 0
             logger.info("Changing tab")
             subprocess.call(["xdotool", "key", "ctrl+Tab"])
+            subprocess.call(["notify-send", "Page %d of %d" % (i, len(sites))])
             logger.info("sitenumber:%d" % i)
             if 'yes' in sites[i][1]:
                 logger.info("refreshing")
