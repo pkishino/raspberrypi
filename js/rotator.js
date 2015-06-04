@@ -39,7 +39,7 @@ angular.module('rotator', [])
                 $scope.model.sites.push({
                     id: idx,
                     refresh: false,
-                    url: 'Placeholder'
+                    url: ''
                 });
                 $scope.adding = true;
                 $scope.editSite($scope.model.sites[idx]);
