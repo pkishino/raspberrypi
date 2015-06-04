@@ -4,9 +4,9 @@ import datetime
 import shlex
 import os
 import runner
+import time
 from collections import namedtuple
 import schedule
-import time
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 
@@ -24,16 +24,16 @@ class MyHandler(PatternMatchingEventHandler):
 def say(text):
     logger.info(text)
     if text.endswith('.mp3'):
-        status = os.system('/usr/bin/say "{0}" \
+        status = os.system('say "{0}" \
         > /tmp/cecilia-say.log 2>&1'
                            .format('Listen up! Time for some wicked tunes!'))
         status = os.system('mplayer {0} > /tmp/cecilia-say.log 2>&1'
                            .format(text))
-        status = os.system('/usr/bin/say "{0}" \
+        status = os.system('say "{0}" \
         > /tmp/cecilia-say.log 2>&1'
                            .format('Ok, back to work again'))
     else:
-        status = os.system('/usr/bin/say "{0}" \
+        status = os.system('say "{0}" \
         > /tmp/cecilia-say.log 2>&1'.format(text))
     logger.info(status)
 
@@ -106,11 +106,15 @@ def main():
         logger.info('Playing single say')
         say(sys.argv[1])
     else:
+        # say('Starting up')
         event_handler = MyHandler(patterns=[cecilia_file])
         observer = Observer()
         observer.schedule(event_handler, path='/home/pi/cil', recursive=True)
         observer.start()
         setup_schedule()
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
         observer.join()
 
 
