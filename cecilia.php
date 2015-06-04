@@ -1,6 +1,6 @@
 <?php
 include 'utils.php';
-// Tell browsers not to cache the file output so we can count all hits
+// Tell browsers not to cache the file output so we can count all hits.
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
@@ -44,7 +44,7 @@ if (isset($_REQUEST['cmd'])) {
                     $quote = preg_quote($old_day . ' ' . $old_time . ' ' . $old_repeat .
                         ' "' . $old_text . '"', '/');
                     echo $quote;
-                    $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', $contents);
+                    $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', $save, $contents);
                     file_put_contents($ceciliatext, $contents);
                 } else {
                     file_put_contents($ceciliatext, $save, FILE_APPEND);
