@@ -12,7 +12,7 @@ angular.module('breakfast', [])
 
             function getTeam() {
                 $scope.team = [];
-                $http.get('../breakfast.php').
+                $http.get('../bin/breakfast.php').
                 success(function (data, status, headers, config) {
                     data = data.split('\n');
                     data.forEach(function (element, index) {

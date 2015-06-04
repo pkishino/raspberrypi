@@ -1,66 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js">
     <head>
-        <title>CIL-Toilet assistant</title>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CIL-Assistant</title>
+
         <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-        <link href="css/site.css" rel="stylesheet">
-        <link href="css/fonts.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/site.css" >
+        <link rel="stylesheet" href="css/fonts.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    </head>
+    <body ng-app="cilAssistant">
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div ng-include="templates/navbar.html"></div>
+        <div ng-view></div>
+        <div ng-include="templates/footer.html"></div>
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">CIL-Assistant</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html"><i class="glyphicon glyphicon-home"></i> Home<span class="sr-only">(current)</span></a></li>
-                        <li><a href="toilets.html">Toilets</a></li>
-                        <li><a href="whoishere.html">Who-Is-Here</a></li>
-                        <li><a href="breakfast.html">Breakfast</a></li>
-                        <li><a href="cecilia.html">CeCILia</a></li>
-                        <li><a href="rotator.html">Site-Rotator</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Hello, I am the CIL-Assistant!</h1>
-                <p>Feel free to explore what I can offer</p>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4">
-                </div>
-            </div>
-            <div class='row'>
-            </div>
-        </div>
-        <footer>
-            <p> Page hits:
-                <script type="text/javascript" src="http://136.225.5.101/counter.php?page=hits"></script>
-            </p>
-            <p>&copy; CIL 2015</p>
-        </footer>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>
