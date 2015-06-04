@@ -20,7 +20,7 @@ if (isset($_REQUEST['cmd'])) {
         if ($locked) {
             echo "Updating file now with: " . $text;
             if ($cmd == 'save') {
-                $save = $refresh . ',"' . $url . '"' . "\n";
+                $save = $refresh . ',' . $url . "\n";
                 echo $save;
                 if (isset($_REQUEST['old_refresh'])) {
                     $old_refresh = $_REQUEST['old_refresh'];
