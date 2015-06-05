@@ -57,7 +57,7 @@ angular.module('rotator', [])
                     selected: {},
                     sites: []
                 };
-                $http.get('http://136.225.5.207/rotator.php').
+                $http.get('http://cil-pi/rotator.php').
                 success(function (data, status, headers, config) {
                     data = data.split('\n');
                     data.forEach(function (element, index) {
@@ -79,7 +79,7 @@ angular.module('rotator', [])
             }
 
             function addSite(newsite) {
-                $http.get('http://136.225.5.207/rotator.php', {
+                $http.get('http://cil-pi/rotator.php', {
                         params: {
                             cmd: 'save',
                             refresh: newsite.refresh,
@@ -94,7 +94,7 @@ angular.module('rotator', [])
             }
 
             function commitSite(oldsite, newsite) {
-                $http.get('http://136.225.5.207/rotator.php', {
+                $http.get('http://cil-pi/rotator.php', {
                         params: {
                             cmd: 'save',
                             refresh: newsite.refresh,
@@ -111,7 +111,7 @@ angular.module('rotator', [])
             }
 
             function deleteSite(site) {
-                $http.get('http://136.225.5.207/rotator.php', {
+                $http.get('http://cil-pi/rotator.php', {
                         params: {
                             cmd: 'delete',
                             refresh: site.refresh,
