@@ -1,5 +1,4 @@
-angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
-    .controller('mainController', ['$scope', '$http', '$modal',
+angular.module('cilAssistant').controller('WhoIsHereCtrl', ['$scope', '$http', '$modal',
         function ($scope, $http, $modal) {
             $scope.teammembers = [];
             getTeam();
@@ -19,7 +18,7 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                 for (var i = 0; i < members.length; i++) {
                     (function (i) {
                         var member = members[i];
-                        $http.get('http://136.225.5.207/members.php', {
+                        $http.get('http://cil-pi/members.php', {
                                 params: {
                                     cmd: 'seen',
                                     name: member.name
@@ -58,7 +57,7 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
             function getTeam() {
                 $scope.loading = true;
                 $scope.teammembers = [];
-                $http.get('http://136.225.5.207/members.php', {
+                $http.get('http://cil-pi/members.php', {
                     params: {
                         cmd: 'fetchall'
                     }
@@ -103,7 +102,7 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                 } else if (diff.indexOf('hour') > -1) {
                     return 'btn-warning';
                 } else if (diff.indexOf('minutes') > -1) {
-                    var time = valueOf(diff.split(' ')[0]);
+                    var time = diff.split(' ')[0].valueOf();
                     if (time > 10) {
                         return 'btn-info';
                     }
@@ -130,7 +129,7 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                 $scope.nodevice = false;
                 $scope.loading = true;
                 $scope.results = [];
-                $http.get('http://136.225.5.207/inquiry.php').
+                $http.get('http://cil-pi/inquiry.php').
                 success(function (data, status, headers, config) {
                     $scope.loading = false;
                     data = data.trim();
@@ -148,6 +147,7 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                     }
                 }).
                 error(function (data, status, headers, config) {
+                    console.log
                     $scope.error = true;
                 });
             }
@@ -164,7 +164,7 @@ angular.module('whoIsHere', ['angularMoment', 'ui.bootstrap', 'angularSpinner'])
                         var member = $scope.results[i];
                         if (member.name) {
                             var address = member.address.split(',')[0];
-                            $http.get('http://136.225.5.207/members.php', {
+                            $http.get('http://cil-pi/members.php', {
                                     params: {
                                         cmd: 'insert',
                                         name: member.name,

@@ -1,4 +1,7 @@
 <?php
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 $offset = $_REQUEST['offset'];
 $offset_end = $offset + 1;
 if (isset($_REQUEST['id'])) {
@@ -20,7 +23,7 @@ if (isset($_REQUEST['test'])) {
 }
 try {
     //open the database
-    $db = new PDO('sqlite:toilet.sqlite');
+    $db = new PDO('sqlite:../toilet.sqlite');
     $result = $db->prepare($statement);
     $result->execute();
     $value = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -31,4 +34,5 @@ try {
     $db = null;
 } catch (PDOException $e) {
     echo 'Exception : ' . $e->getMessage();
+    http_response_code(500);
 }

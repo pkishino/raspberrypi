@@ -81,7 +81,7 @@ if (strlen($page) == 0) {
 
 // Set values for cookie and log file names
 $cname = 'tcount_unique_' . $page;
-$logfile = 'logs/' . $page . '.txt';
+$logfile = '../logs/' . $page . '.txt';
 
 // Does the log file exist?
 if (!file_exists($logfile)) {
@@ -132,5 +132,5 @@ if (strlen($thousands_separator)) {
 }
 
 // Print out Javascript code and exit
-echo ("document.write('{$count}');");
+echo ("document.getElementById(\"count\").innerHTML='{$count}';");
 exit();

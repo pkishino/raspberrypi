@@ -1,23 +1,22 @@
-<div class="container">
+<div ng-controller="ToiletsCtrl" class="container">
     <div class="row">
-        <div class="col-md-12">
-            <script>start()</script>
+        <div class="col-md-12" ng-init="start()">
             <h1 align='center'>Lindblad lvl 2 Toilets</h1>
             <p class="centeredImage">
-                <img id="toilet_status_1" src='' style='width:256px;height:256px'>
-                <img id="toilet_status_2" src='' style='width:256px;height:256px'>
+                <img id="toilet_status_1" src='{{toilets[0]}}' style='width:256px;height:256px'>
+                <img id="toilet_status_2" src='{{toilets[1]}}' style='width:256px;height:256px'>
             </p>
         </div>
     </div>
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseStatistics" aria-expanded="false" aria-controls="collapseStatistics">
     Statistics
     </button>
-    <div class="collape">
+    <div ng-controller="GraphsCtrl" class="collape">
         <div class="well collapse" id="collapseStatistics">
             <ul class="nav nav-tabs nav-justified" role='tablist'>
                 <li role="presentation">
-                    <a href="#timeline-tab" data-toggle="tab" role='tab' aria-controls='timeline-tab' id='theTime'>
-                        <script>document.getElementById('theTime').innerHTML = setDate();</script>
+                    <a href="#timeline-tab" data-toggle="tab" role='tab' aria-controls='timeline-tab' ng-init="setDate()">
+                        {{date}}
                     </a>
                 </li>
                 <li role="presentation"><a href="#amount-tab" data-toggle="tab" role='tab' aria-controls='amount-tab'>Amount</a></li>
@@ -50,12 +49,7 @@
                         <div class='col-md-12' id="toilet-availability" style="height: 170px;"></div>
                     </div>
                 </div>
-                <script src="js/toilets.js"></script>
             </div>
         </div>
     </div>
-    <script src="https://www.google.com/jsapi"></script>
-    <script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['timeline']}]}"></script>
-    <script src='js/graph.js'></script>
-    <script src='js/utils.js'></script>
-    <script src='js/toilets.js'></script>
+</div>

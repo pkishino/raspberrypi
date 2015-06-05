@@ -1,8 +1,10 @@
 <?php
-
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 try {
     //open the database
-    $db = new PDO('sqlite:toilet.sqlite');
+    $db = new PDO('sqlite:../toilet.sqlite');
 
     $result = $db->query('SELECT * FROM toilet_data GROUP BY id ORDER BY timestamp');
     $first = true;

@@ -2,42 +2,41 @@
  * Main AngularJS Web Application
  */
 angular.module('cilAssistant', [
-        'ngRoute'
+        'ngRoute',
+        'angularMoment',
+        'ui.bootstrap',
+        'angularSpinner'
     ])
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
         $routeProvider
         // Home
             .when("/", {
-                templateUrl: "partials/home.html",
-                controller: "PageCtrl"
+                templateUrl: "partials/home.html"
             })
             // Pages
             .when("/breakfast", {
                 templateUrl: "partials/breakfast.html",
-                controller: "PageCtrl"
+                controller: "BreakfastCtrl"
             })
             .when("/cecilia", {
                 templateUrl: "partials/cecilia.html",
-                controller: "PageCtrl"
+                controller: "CeciliaCtrl"
             })
             .when("/toilets", {
                 templateUrl: "partials/toilets.html",
-                controller: "PageCtrl"
+                controller: "ToiletsCtrl"
             })
             .when("/whoishere", {
                 templateUrl: "partials/whoishere.html",
-                controller: "PageCtrl"
+                controller: "WhoIsHereCtrl"
             })
             .when("/rotator", {
                 templateUrl: "partials/rotator.html",
-                controller: "PageCtrl"
+                controller: "RotatorCtrl"
             })
             // else 404
-            .otherwise("/404", {
-                templateUrl: "partials/404.html",
-                controller: "PageCtrl"
+            .otherwise("/", {
+                templateUrl: "partials/home.html"
             });
-    }])
-    .controller('PageCtrl', ['$scope', function ($scope) {
-        console.log('PageCtrl loaded');
+        $locationProvider.html5Mode(true);
     }]);

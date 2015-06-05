@@ -1,5 +1,4 @@
-angular.module('cecilia', [])
-    .controller('mainController', ['$scope', '$http',
+angular.module('cilAssistant').controller('CeciliaCtrl', ['$scope', '$http',
         function ($scope, $http) {
             $scope.adding = false;
             getText();
@@ -59,7 +58,7 @@ angular.module('cecilia', [])
             };
 
             function playItem(item) {
-                $http.get('http://136.225.5.207/cecilia.php', {
+                $http.get('http://cil-pi/cecilia.php', {
                         params: {
                             say: item.text
                         }
@@ -76,7 +75,7 @@ angular.module('cecilia', [])
                     selected: {},
                     items: []
                 };
-                $http.get('http://136.225.5.207/cecilia.php').
+                $http.get('http://cil-pi/cecilia.php').
                 success(function (data, status, headers, config) {
                     data = data.split('\n');
                     data.forEach(function (element, index) {
@@ -100,7 +99,7 @@ angular.module('cecilia', [])
             }
 
             function addItem(newitem) {
-                $http.get('http://136.225.5.207/cecilia.php', {
+                $http.get('http://cil-pi/cecilia.php', {
                         params: {
                             cmd: 'save',
                             day: newitem.day,
@@ -117,7 +116,7 @@ angular.module('cecilia', [])
             }
 
             function commitItem(olditem, newitem) {
-                $http.get('http://136.225.5.207/cecilia.php', {
+                $http.get('http://cil-pi/cecilia.php', {
                         params: {
                             cmd: 'save',
                             day: newitem.day,
@@ -138,7 +137,7 @@ angular.module('cecilia', [])
             }
 
             function deleteItem(item) {
-                $http.get('http://136.225.5.207/cecilia.php', {
+                $http.get('http://cil-pi/cecilia.php', {
                         params: {
                             cmd: 'delete',
                             day: item.day,
