@@ -1,6 +1,6 @@
 angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$window',
     function ($scope, $http, $window) {
-        $scope.toilets = [0, 0];
+        $scope.toilets = [];
 
         $scope.start = function () {
             window.blurred = false;
@@ -21,6 +21,7 @@ angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$w
 
         $window.onblur = function () {
             window.blurred = true;
+            console.log("lost focus");
         };
 
         function readToilets(id) {
