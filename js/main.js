@@ -2,41 +2,44 @@
  * Main AngularJS Web Application
  */
 angular.module('cilAssistant', [
-        'ngRoute',
+        'ui.router',
         'angularMoment',
         'ui.bootstrap',
         'angularSpinner'
     ])
-    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-        $routeProvider
+    .config(['$stateProvider', '$urlRouterProvider','$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
+        $urlRouterProvider.otherwise("/");
+        $stateProvider
         // Home
-            .when("/", {
+            .state("home", {
+                url: "/",
                 templateUrl: "partials/home.html"
             })
             // Pages
-            .when("/breakfast", {
+            .state("breakfast", {
+                url:"/breakfast",
                 templateUrl: "partials/breakfast.html",
                 controller: "BreakfastCtrl"
             })
-            .when("/cecilia", {
+            .state("cecilia", {
+                url:"/cecilia",
                 templateUrl: "partials/cecilia.html",
                 controller: "CeciliaCtrl"
             })
-            .when("/toilets", {
+            .state("toilets", {
+                url:"/toilets",
                 templateUrl: "partials/toilets.html",
                 controller: "ToiletsCtrl"
             })
-            .when("/whoishere", {
+            .state("whoishere", {
+                url:"/whoishere",
                 templateUrl: "partials/whoishere.html",
                 controller: "WhoIsHereCtrl"
             })
-            .when("/rotator", {
+            .state("rotator", {
+                url:"/rotator",
                 templateUrl: "partials/rotator.html",
                 controller: "RotatorCtrl"
-            })
-            // else 404
-            .otherwise("/", {
-                templateUrl: "partials/home.html"
             });
         $locationProvider.html5Mode(true);
     }]);

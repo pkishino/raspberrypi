@@ -6,20 +6,20 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
         });
 
         function get_data(offset, callback, id) {
-            var params = {}
+            var params = {};
             if (typeof (id) !== 'undefined') {
                 params = {
                     offset: offset,
                     id: id
-                }
+                };
             } else {
                 params = {
                     offset: offset
-                }
+                };
             }
 
             $http.get('http://cil-web/graph.php', {
-                params
+                params:params
             }).
             success(function (data, status, headers, config) {
                 callback(data);
@@ -43,7 +43,7 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
                 day = "0" + day;
             }
             $scope.date = "Times for " + year + "-" + month + "-" + day;
-        }
+        };
 
         function getDataWithID(id, offset) {
             offset = typeof offset !== 'undefined' ? offset : 0;
