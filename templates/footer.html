@@ -1,8 +1,7 @@
 <footer>
-    <p> Page hits:
-    <tag id="count"></tag>
-        <script type="text/javascript" src="../bin/counter.php?page=hits">
-        </script>
-    </p>
+    <div ng-controller="CountCtrl">
+        <p> Page hits:{{count}}
+        </p>
+    </div>
     <p>&copy; CIL 2015</p>
 </footer>

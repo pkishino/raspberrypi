@@ -8,48 +8,17 @@
             </p>
         </div>
     </div>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseStatistics" aria-expanded="false" aria-controls="collapseStatistics">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseStatistics" aria-expanded="false" aria-controls="collapseStatistics" ng-click="showStats()">
     Statistics
     </button>
     <div ng-controller="GraphsCtrl" class="collape">
         <div class="well collapse" id="collapseStatistics">
-            <ul class="nav nav-tabs nav-justified" role='tablist'>
-                <li role="presentation">
-                    <a href="toilets/timeline-tab" data-toggle="tab" role='tab' aria-controls='timeline-tab' ng-init="setDate()">
-                        {{date}}
-                    </a>
-                </li>
-                <li role="presentation"><a href="toilets/amount-tab" data-toggle="tab" role='tab' aria-controls='amount-tab'>Amount</a></li>
-                <li role="presentation"><a href="toilets/availability-tab" data-toggle="tab" role='tab' aria-controls='availability-tab'>Availability</a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane" id="timeline-tab" role='tabpanel'>
-                    <div class="row">
-                        <h1>Left Toilet</h1>
-                        <div class='col-md-12' id="toilet1" style="height: 170px;"></div>
+            <tabset class="nav nav-tabs nav-justified" role='tablist'>
+                <tab ng-repeat="t in tabs" heading="{{t.heading}}" select="go(t.route)" active="t.active">
+                    <div ui-view>
                     </div>
-                    <div class="row">
-                        <h1>Right Toilet</h1>
-                        <div class='col-md-12' id="toilet2" style="height: 170px;"></div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="amount-tab" role='tabpanel'>
-                    <div class="row">
-                        <h1>Left Toilet</h1>
-                        <h2 id="toilet_total1"></h2>
-                    </div>
-                    <div class="row">
-                        <h1>Right Toilet</h1>
-                        <h2 id="toilet_total2"></h2>
-                    </div>
-                </div>
-                <div class="tab-pane" id="availability-tab" role='tabpanel'>
-                    <div class="row">
-                        <h1>Combined availability</h1>
-                        <div class='col-md-12' id="toilet-availability" style="height: 170px;"></div>
-                    </div>
-                </div>
-            </div>
+                </tab>
+            </tabset>
         </div>
     </div>
 </div>

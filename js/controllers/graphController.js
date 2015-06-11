@@ -1,9 +1,60 @@
-angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
-    function ($scope, $http) {
-        $scope.amount = [0, 0];
-        google.load("visualization", "1", {
-            packages: ["timeline"]
+angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope', '$state', '$http',
+    function ($rootScope, $scope, $state, $http) {
+        $scope.error = false;
+        $scope.tabs = [{
+            heading: getDate(),
+            route: "toilets.stats_day",
+            active: false
+        }, {
+            heading: "Availability",
+            route: "toilets.stats_combined",
+            active: false
+        }, {
+            heading: "Daily totals",
+            route: "toilets.stats_amount",
+            active: false
+        }];
+
+        $scope.go = function (route) {
+            if ($scope.show_stats === true) {
+                $state.go(route);
+            }
+        };
+
+        $scope.active = function (route) {
+            return $state.is(route);
+        };
+
+        $scope.$on("$stateChangeSuccess", function () {
+            $scope.tabs.forEach(function (tab) {
+                tab.active = $scope.active(tab.route);
+            });
         });
+        $scope.$on('$viewContentLoaded',
+            function (event, viewConfig) {
+                console.log("View Load: the view is loaded, and DOM rendered!");
+                switch ($state.current.name) {
+                    case "toilets.stats_day":
+                        $scope.day_stat();
+                        break;
+                    case "toilets.stats_amount":
+                        $scope.amount();
+                        break;
+                    case "toilets.stats_combined":
+                        $scope.combined();
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+        $scope.$watch('show_stats', function () {
+            if ($scope.show_stats === true) {
+                $scope.go('toilets.stats_day');
+            }
+        });
+
+        $scope.amount = [0, 0];
 
         function get_data(offset, callback, id) {
             var params = {};
@@ -18,8 +69,8 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
                 };
             }
 
-            $http.get('http://cil-web/graph.php', {
-                params:params
+            $http.get('../bin/graph.php', {
+                params: params
             }).
             success(function (data, status, headers, config) {
                 callback(data);
@@ -30,7 +81,7 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
             });
         }
 
-        $scope.setDate = function () {
+        function getDate() {
             var currentDate = new Date();
             currentDate.setDate(currentDate.getDate() - 1);
             var day = currentDate.getDate();
@@ -42,8 +93,8 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
             if (day < 10) {
                 day = "0" + day;
             }
-            $scope.date = "Times for " + year + "-" + month + "-" + day;
-        };
+            return "Times for " + year + "-" + month + "-" + day;
+        }
 
         function getDataWithID(id, offset) {
             offset = typeof offset !== 'undefined' ? offset : 0;
@@ -64,9 +115,10 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
             };
             var data = createDataTable(id, offset, function (data) {
                 if (data.getNumberOfRows() > 0) {
-                    drawChart(data, 'toilet' + id, options);
+                    google.setOnLoadCallback(drawChart(data, 'toilet' + id, options));
                 } else {
                     console.error("No Data collected yet");
+                    $scope.error = true;
                 }
             });
 
@@ -76,7 +128,12 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
             offset = typeof offset !== 'undefined' ? offset : 0;
             var data = createDataTable(id, offset, function (data) {
                 var amount = data.getNumberOfRows();
-                drawAmountData(amount, id);
+                if (amount > 0) {
+                    drawAmountData(amount, id);
+                } else {
+                    console.error("No Data collected yet");
+                    $scope.error = true;
+                }
             });
         }
 
@@ -95,9 +152,10 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
             };
             var data = createAvailabilityData(offset, function (data) {
                 if (data.getNumberOfRows() > 0) {
-                    drawChart(data, 'toilet-availability', options);
+                    google.setOnLoadCallback(drawChart(data, 'availability', options));
                 } else {
                     console.error("No Data collected yet");
+                    $scope.error = true;
                 }
             });
         }
@@ -201,15 +259,17 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
         }
 
         function drawChart(dataTable, id, options) {
-            var element = document.getElementById(id);
-            var chart = new google.visualization.Timeline(element);
-
-            chart.draw(dataTable, options);
+            var elements = document.getElementsByName(id);
+            for (var i = elements.length - 1; i >= 0; i--) {
+                if (elements[i].clientWidth > 0) {
+                    var chart = new google.visualization.Timeline(elements[0]);
+                    chart.draw(dataTable, options);
+                }
+            };
         }
 
         function drawAmountData(amount, id) {
-            var element = document.getElementById('toilet_total' + id);
-            element.innerHTML = "Total:" + amount;
+            $scope.amount[id - 1] = '' + amount;
         }
 
         function dateFromUTC(dateAsString, ymdDelimiter) {
@@ -219,28 +279,19 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$scope', '$http',
                 parseInt(parts[1]), parseInt(parts[2], 10) - 1, parseInt(parts[3], 10), parseInt(parts[4], 10), parseInt(parts[5], 10), parseInt(parts[6], 10), 0
             ));
         }
-        $('a[data-toggle="tab"]:first').on('show.bs.tab', function (e) {
-            function dbLoaded() {
-                getDataWithID(1, 0);
-                getDataWithID(2, 0);
-            }
-            setTimeout(dbLoaded, 1000);
-        });
-        $('a[data-toggle="tab"]:eq(1)').on('show.bs.tab', function (e) {
-            function dbLoaded() {
-                getAmount(1, 0);
-                getAmount(2, 0);
-            }
-            setTimeout(dbLoaded, 1000);
-        });
-        $('a[data-toggle="tab"]:eq(2)').on('show.bs.tab', function (e) {
-            function dbLoaded() {
-                getAvailability(0);
-            }
-            setTimeout(dbLoaded, 1000);
-        });
-        $('#collapseStatistics').on('show.bs.collapse', function () {
-            $('a[data-toggle="tab"]:first').tab('show');
-        });
+
+        $scope.day_stat = function () {
+            getDataWithID(1, 0);
+            getDataWithID(2, 0);
+        }
+
+        $scope.amount = function () {
+            getAmount(1, 0);
+            getAmount(2, 0);
+        }
+
+        $scope.combined = function () {
+            getAvailability(0);
+        }
     }
 ]);

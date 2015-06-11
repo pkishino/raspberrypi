@@ -3,7 +3,7 @@
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-$value = '../images/toilet_error.png';
+$value = 'images/toilet_error.png';
 try {
     //open the database
     $db = new PDO('sqlite:../toilet.sqlite');
@@ -20,15 +20,14 @@ try {
     foreach ($value as $row) {
         if ($row['id'] == $tag) {
             if ($row['state'] == 0) {
-                $value = '../images/toilet_green.png';
+                $value = 'images/toilet_green.png';
             } else {
-                $value = '../images/toilet_red.png';
+                $value = 'images/toilet_red.png';
             }
         }
     }
     $db = null;
 } catch (PDOException $e) {
     // echo $e->getMessage();
-
 }
 echo $value;

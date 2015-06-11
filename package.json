@@ -1,0 +1,11 @@
+{
+    "name": "cil-pi",
+    "devDependencies": {
+        "jshint": "latest",
+        "browserify": "latest"
+    },
+    "scripts": {
+        "lint": "jshint **/*.js",
+        "build": "browserify main.js > cil-pi.min.js"
+    }
+}

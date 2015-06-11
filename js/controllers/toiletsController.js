@@ -1,7 +1,15 @@
 angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$window',
     function ($scope, $http, $window) {
         $scope.toilets = [];
+        $scope.show_stats = false;
 
+        $scope.showStats = function () {
+            if ($scope.show_stats == false) {
+                $scope.show_stats = true;
+            } else {
+                $scope.show_stats = false;
+            }
+        }
         $scope.start = function () {
             window.blurred = false;
             interval = setInterval(load, 1000);
@@ -25,7 +33,7 @@ angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$w
         };
 
         function readToilets(id) {
-            $http.get('http://cil-web/toiletstate.php', {
+            $http.get('../bin/toiletstate.php', {
                     params: {
                         id: id
                     }
