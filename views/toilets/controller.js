@@ -1,7 +1,12 @@
-angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$window',
-    function ($scope, $http, $window) {
+angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$window', '$state',
+    function ($scope, $http, $window, $state) {
         $scope.toilets = [];
         $scope.show_stats = false;
+
+        if ($state.current.name !== 'toilets') {
+            $('#collapseStatistics').collapse('show');
+            $scope.show_stats = true;
+        }
 
         $scope.showStats = function () {
             if ($scope.show_stats == false) {
@@ -9,11 +14,12 @@ angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$w
             } else {
                 $scope.show_stats = false;
             }
-        }
+        };
+
         $scope.start = function () {
             window.blurred = false;
             interval = setInterval(load, 1000);
-        }
+        };
 
         function load() {
             if (window.blurred) {
@@ -33,19 +39,18 @@ angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$w
         };
 
         function readToilets(id) {
-            $http.get('../bin/toiletstate.php', {
-                    params: {
-                        id: id
-                    }
-                })
-                .then(function (response) {
-                    if (response.data) {
-                        $scope.toilets[id - 1] = response.data;
-                    }
-                }, function () {
-                    console.log('Error');
-                    $scope.loading = false;
-                });
+            $http.get('toiletstate.php', {
+                params: {
+                    id: id
+                }
+            }).
+            success(function (data, status, headers, config) {
+                $scope.toilets[id - 1] = data;
+            }).
+            error(function (data, status, headers, config) {
+                console.log('Error');
+                $scope.toilets[id - 1] = 'images/toilet_error.png';
+            });
         }
     }
 ]);

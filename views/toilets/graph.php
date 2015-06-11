@@ -23,7 +23,8 @@ if (isset($_REQUEST['test'])) {
 }
 try {
     //open the database
-    $db = new PDO('sqlite:../toilet.sqlite');
+    $db_path=$_SERVER['DOCUMENT_ROOT'].'/toilet.sqlite';
+    $db = new PDO("sqlite:$db_path");
     $result = $db->prepare($statement);
     $result->execute();
     $value = $result->fetchAll(PDO::FETCH_ASSOC);

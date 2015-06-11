@@ -81,7 +81,7 @@ if (strlen($page) == 0) {
 
 // Set values for cookie and log file names
 $cname = 'tcount_unique_' . $page;
-$logfile = '../logs/' . $page . '.txt';
+$logfile = $page . '.txt';
 
 // Does the log file exist?
 if (!file_exists($logfile)) {

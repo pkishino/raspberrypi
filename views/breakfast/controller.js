@@ -11,7 +11,7 @@ angular.module('cilAssistant').controller('BreakfastCtrl', ['$scope', '$http',
 
         function getTeam() {
             $scope.team = [];
-            $http.get('../bin/breakfast.php').
+            $http.get('breakfast.php').
             success(function (data, status, headers, config) {
                 data = data.split('\n');
                 data.forEach(function (element, index) {

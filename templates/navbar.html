@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavCtrl">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -9,15 +9,6 @@
             </button>
             <a class="navbar-brand">CIL-Assistant</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a ui-sref="home" data-toggle="tab" data-target="#tab"><i class="glyphicon glyphicon-home"></i> Home<span class="sr-only">(current)</span></a></li>
-                <li><a ui-sref="toilets" data-toggle="tab" data-target="#tab">Toilets</a></li>
-                <li><a ui-sref="whoishere" data-toggle="tab" data-target="#tab">Who-Is-Here</a></li>
-                <li><a ui-sref="breakfast" data-toggle="tab" data-target="#tab">Breakfast</a></li>
-                <li><a ui-sref="cecilia" data-toggle="tab" data-target="#tab">CeCILia</a></li>
-                <li><a ui-sref="rotator" data-toggle="tab" data-target="#tab">Site-Rotator</a></li>
-            </ul>
-        </div>
+        <tabs data="tabData" type="pills" id="navbar" class="navbar-collapse collapse" template-url="templates/navtab.html"/>
     </div>
 </nav>

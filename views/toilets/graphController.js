@@ -1,6 +1,5 @@
 angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope', '$state', '$http',
     function ($rootScope, $scope, $state, $http) {
-        $scope.error = false;
         $scope.tabs = [{
             heading: getDate(),
             route: "toilets.stats_day",
@@ -69,7 +68,7 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
                 };
             }
 
-            $http.get('../bin/graph.php', {
+            $http.get('graph.php', {
                 params: params
             }).
             success(function (data, status, headers, config) {
@@ -96,6 +95,17 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
             return "Times for " + year + "-" + month + "-" + day;
         }
 
+        function checkDataAmount(data) {
+            var amount = data.getNumberOfRows();
+            if (amount > 0) {
+                $scope.error = false;
+            } else {
+                console.error("No Data collected yet");
+                $scope.error = true;
+            }
+            return amount;
+        }
+
         function getDataWithID(id, offset) {
             offset = typeof offset !== 'undefined' ? offset : 0;
             var options = {
@@ -113,12 +123,9 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
                     }
                 }
             };
-            var data = createDataTable(id, offset, function (data) {
-                if (data.getNumberOfRows() > 0) {
+            createDataTable(id, offset, function (data) {
+                if (checkDataAmount(data) > 0 && $scope.error !== true) {
                     google.setOnLoadCallback(drawChart(data, 'toilet' + id, options));
-                } else {
-                    console.error("No Data collected yet");
-                    $scope.error = true;
                 }
             });
 
@@ -127,12 +134,9 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
         function getAmount(id, offset) {
             offset = typeof offset !== 'undefined' ? offset : 0;
             var data = createDataTable(id, offset, function (data) {
-                var amount = data.getNumberOfRows();
-                if (amount > 0) {
+                var amount = checkDataAmount(data);
+                if ($scope.error !== true) {
                     drawAmountData(amount, id);
-                } else {
-                    console.error("No Data collected yet");
-                    $scope.error = true;
                 }
             });
         }
@@ -150,12 +154,9 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
                     }
                 }
             };
-            var data = createAvailabilityData(offset, function (data) {
-                if (data.getNumberOfRows() > 0) {
+            createAvailabilityData(offset, function (data) {
+                if (checkDataAmount(data) > 0 && $scope.error !== true) {
                     google.setOnLoadCallback(drawChart(data, 'availability', options));
-                } else {
-                    console.error("No Data collected yet");
-                    $scope.error = true;
                 }
             });
         }
@@ -262,7 +263,7 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
             var elements = document.getElementsByName(id);
             for (var i = elements.length - 1; i >= 0; i--) {
                 if (elements[i].clientWidth > 0) {
-                    var chart = new google.visualization.Timeline(elements[0]);
+                    var chart = new google.visualization.Timeline(elements[i]);
                     chart.draw(dataTable, options);
                 }
             };

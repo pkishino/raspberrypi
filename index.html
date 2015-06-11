@@ -6,11 +6,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>CIL-Assistant</title>
         <base href="/">
+        
         <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/normalize.css">
+        
+        <!-- CSS Vendor -->
+        <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+        <link rel="stylesheet" href="css/vendor/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/vendor/normalize.css">
+
+        <!--CSS -->
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/site.css" >
         <link rel="stylesheet" href="css/fonts.css">
@@ -20,15 +25,16 @@
         <script src="js/vendor/jquery-2.1.4.min.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/angular.min.js"></script>
-        <script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
-       'version':'1','packages':['timeline']}]}"></script>
         <script src="js/vendor/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
+        <script src="js/vendor/angular-moment.min.js"></script>
+        <script src="js/vendor/ui-bootstrap.min.js"></script>
+        <script src="js/vendor/ui-bootstrap-tpls.min.js"></script>
         <script src='js/vendor/spin.min.js'></script>
         <script src='js/vendor/angular-spinner.min.js'></script>
         <script src="js/vendor/angular-ui-router.min.js"></script>
+        <script src="js/vendor/ui-router-tabs.js"></script>
+        <script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
+       'version':'1','packages':['timeline']}]}"></script>
     </head>
     <body ng-app="cilAssistant">
         <!--[if lt IE 8]>
@@ -44,12 +50,12 @@
         <script src='js/utils.js'></script>
 
         <!-- Controllers -->
-        <script src='js/controllers/footerController.js'></script>
-        <script src='js/controllers/breakfastController.js'></script>
-        <script src='js/controllers/graphController.js'></script>
-        <script src='js/controllers/rotatorController.js'></script>
-        <script src='js/controllers/toiletsController.js'></script>
-        <script src='js/controllers/whoishereController.js'></script>
-        <script src='js/controllers/ceciliaController.js'></script>
+        <script src='views/counter/controller.js'></script>
+        <script src='views/breakfast/controller.js'></script>
+        <script src='views/cecilia/controller.js'></script>
+        <script src='views/rotator/controller.js'></script>
+        <script src='views/whoishere/controller.js'></script>
+        <script src='views/toilets/controller.js'></script>
+        <script src='views/toilets/graphController.js'></script>
     </body>
 </html>
