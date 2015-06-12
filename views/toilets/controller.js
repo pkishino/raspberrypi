@@ -39,7 +39,7 @@ angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$w
         };
 
         function readToilets(id) {
-            $http.get('toiletstate.php', {
+            $http.get('/views/toilets/toiletstate.php', {
                 params: {
                     id: id
                 }

@@ -1,5 +1,5 @@
 angular.module('cilAssistant').controller('CountCtrl', ['$scope', '$http', function ($scope, $http) {
-    $http.get('counter.php', {
+    $http.get('/views/counter/counter.php', {
         params: {
             page: 'hits'
         }

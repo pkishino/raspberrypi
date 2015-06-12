@@ -68,7 +68,7 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
                 };
             }
 
-            $http.get('graph.php', {
+            $http.get('/views/toilets/graph.php', {
                 params: params
             }).
             success(function (data, status, headers, config) {
