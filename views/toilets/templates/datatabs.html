@@ -1,0 +1,8 @@
+<tabset class="tab-container" type="{{type}}" vertical="{{vertical}}" justified="{{justified}}">
+    <tab class="toilet tab" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled" ng-click="go(tab)">
+        <tab-heading>
+            <i class="{{tab.params.icon}}"></i> {{tab.heading}}
+        </tab-heading>
+        <div ui-view></div>
+    </tab>
+</tabset>

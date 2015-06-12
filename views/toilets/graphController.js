@@ -1,17 +1,14 @@
 angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope', '$state', '$http',
     function ($rootScope, $scope, $state, $http) {
-        $scope.tabs = [{
+        $scope.tabData = [{
             heading: getDate(),
             route: "toilets.stats_day",
-            active: false
         }, {
             heading: "Availability",
             route: "toilets.stats_combined",
-            active: false
         }, {
             heading: "Daily totals",
             route: "toilets.stats_amount",
-            active: false
         }];
 
         $scope.go = function (route) {
@@ -25,7 +22,7 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
         };
 
         $scope.$on("$stateChangeSuccess", function () {
-            $scope.tabs.forEach(function (tab) {
+            $scope.tabData.forEach(function (tab) {
                 tab.active = $scope.active(tab.route);
             });
         });
@@ -52,8 +49,6 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
                 $scope.go('toilets.stats_day');
             }
         });
-
-        $scope.amount = [0, 0];
 
         function get_data(offset, callback, id) {
             var params = {};
@@ -272,7 +267,10 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
         }
 
         function drawAmountData(amount, id) {
-            $scope.amount[id - 1] = '' + amount;
+            var elements = document.getElementsByName('toilet_total' + id);
+            for (var i = elements.length - 1; i >= 0; i--) {
+                elements[i].innerHTML = '' + amount;
+            };
         }
 
         function dateFromUTC(dateAsString, ymdDelimiter) {

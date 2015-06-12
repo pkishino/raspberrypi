@@ -2,7 +2,6 @@ angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$w
     function ($scope, $http, $window, $state) {
         $scope.toilets = [];
         $scope.show_stats = false;
-
         if ($state.current.name !== 'toilets') {
             $('#collapseStatistics').collapse('show');
             $scope.show_stats = true;
