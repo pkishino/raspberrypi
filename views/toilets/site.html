@@ -13,12 +13,7 @@
     </button>
     <div ng-controller="GraphsCtrl" class="collape">
         <div class="well collapse" id="collapseStatistics">
-            <tabset class="nav nav-tabs nav-justified" role='tablist'>
-                <tab ng-repeat="t in tabs" heading="{{t.heading}}" select="go(t.route)" active="t.active">
-                    <div ui-view>
-                    </div>
-                </tab>
-            </tabset>
+            <tabs data="tabData" type="pills" id="navbar" template-url="/views/toilets/templates/datatabs.html">
         </div>
     </div>
 </div>
