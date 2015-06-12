@@ -147,8 +147,9 @@ angular.module('cilAssistant').controller('WhoIsHereCtrl', ['$scope', '$http', '
                     }
                 }).
                 error(function (data, status, headers, config) {
-                    console.log
+		    console.log('Error'+data);
                     $scope.error = true;
+		    $scope.loading = false;
                 });
             }
 
@@ -189,3 +190,4 @@ angular.module('cilAssistant').controller('WhoIsHereCtrl', ['$scope', '$http', '
             }
         }
     ]);
+

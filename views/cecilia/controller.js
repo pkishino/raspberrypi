@@ -40,7 +40,7 @@ angular.module('cilAssistant').controller('CeciliaCtrl', ['$scope', '$http',
                     day: 0,
                     time: '00:00',
                     repeat: 0,
-                    text: 'Placeholder'
+                    text: ''
                 });
                 $scope.adding = true;
                 $scope.editItem($scope.model.items[idx]);
