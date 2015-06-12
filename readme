@@ -1,0 +1,23 @@
+CIL floor toilet indicator (Raspberry pee)
+
+INSTALLATION
+This scripts has a few dependencies. To install those, run this:
+
+# bash bin/install_dependencies.sh
+
+once that is done, start the indicator with 
+
+$ bin/rpee-indicator.py
+
+CONFIGURATION
+The notifier has a default configuration that typically works, but should you wish to change anything, create a file called ~/.rpee with the following content:
+
+[rpee]
+server_url=http://136.225.5.101/toiletdata.php
+sleep_time=3
+resource_dir=/var/tmp/rpee/icons
+http_timeout=10
+
+
+These settings can then be modified. This should normally not be needed.
+
