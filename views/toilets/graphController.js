@@ -112,6 +112,7 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
                 colors: ['#00A9D4', '#5fbadd', '#f0f1f1'],
                 timeline: {
                     showRowLabels: false,
+                    showBarLabels: false,
                     rowLabelStyle: {
                         fontName: 'Helvetica',
                         fontSize: 36,
@@ -148,6 +149,7 @@ angular.module('cilAssistant').controller('GraphsCtrl', ['$rootScope', '$scope',
                 avoidOverlappingGridLines: true,
                 timeline: {
                     showRowLabels: false,
+                    showBarLabels: false,
                     barLabelStyle: {
                         fontName: 'Helvetica',
                         fontSize: 34
