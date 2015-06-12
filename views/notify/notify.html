@@ -1,0 +1,54 @@
+<div ng-controller="NotifyCtrl" class="container">
+    <div class="page-header text-center">
+        <h1>Custom Reminders</h1>
+    </div>
+    
+    <p class='text-left'>
+        <div class="btn-group" role="group" aria-label="">
+            <button type="button" ng-click="queryTeam()" ng-disabled="loading" class="btn btn-sm btn-primary">
+            <i class="glyphicon glyphicon-refresh"></i> Query whole team
+            </button>
+            <button type="button" ng-click="getTeam()" ng-disabled="loading" class="btn btn-sm btn-info">
+            <i class="glyphicon glyphicon-search"></i> Check for new members
+            </button>
+            <button type="button" ng-click="addNewMember()" ng-disabled="loading" class="btn btn-sm btn-success">
+            <i class="glyphicon glyphicon-plus"></i> Add new member
+            </button>
+        </div>
+    </p>
+    <script type="text/ng-template" id="newMember.html">
+    <div class="modal-header">
+        <h1 class="modal-title">Add new member</h1>
+    </div>
+    <div class="modal-body row">
+        <h3 align='center' ng-hide="loading">Visible Bluetooth devices:</h3>
+        <h4 align='center' ng-show="error">There was an error, please scan again</h4>
+        <h4 align='center' ng-show="nodevice">No device found, please set it to discoverable</h4>
+        <p>
+            <span us-spinner ng-show="loading" align='center'></span>
+        </p>
+        <table class="table table-striped">
+            <tbody ng-repeat="device in results">
+                <tr>
+                    <td>
+                        {{device.address}}
+                    </td>
+                    <td>
+                        <input type="text" ng-model="device.name" placeholder="Owner name" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <div class="btn-group" role="group" aria-label="">
+            <button class="btn btn-info" ng-click="rescan()" ng-disabled="loading">
+            <i class="glyphicon glyphicon-refresh"></i> Re-scan</button>
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="loading">
+            <i class="glyphicon glyphicon-ok"></i> OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">
+            <i class="glyphicon glyphicon-remove"></i> Cancel</button>
+        </div>
+    </div>
+    </script>
+</div>

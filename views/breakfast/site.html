@@ -1,0 +1,29 @@
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>The bringer of the great</h2>
+                <h1>friday breakfast</h1>
+                <h2>Current week:{{week}} Bringer:{{bringer}}</h2>
+                <h3>Will send out reminder in {{days_left}} day{{days_left == 1 ? '' : 's'}}</h3>
+                <h1 ng-show="{{days_left}}==6">thank you {{bringer}}<br> for todays feast</h1>
+            </div>
+            <div class="col-md-6">
+                <table class="table tftable" border="1">
+                    <tr>
+                        <th>Week</th>
+                        <th>Responsible</th>
+                    </tr>
+                    <tr ng-repeat="member in team" ng-class="{'special':{{week}} == {{member.week}}}">
+                        <td>
+                            {{member.week}}
+                        </td>
+                        <td>
+                            {{member.name}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div ng-controller="ToiletsCtrl" class="container">
+    <div class="row">
+        <div class="col-md-12" ng-init="start()">
+            <h1 align='center'>Lindblad lvl 2 Toilets</h1>
+            <p class="centeredImage">
+                <img id="toilet_status_1" src='{{toilets[0]}}' style='width:256px;height:256px'>
+                <img id="toilet_status_2" src='{{toilets[1]}}' style='width:256px;height:256px'>
+            </p>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseStatistics" aria-expanded="false" aria-controls="collapseStatistics" ng-click="showStats()">
+    Statistics
+    </button>
+    <div ng-controller="GraphsCtrl" class="collape">
+        <div class="well collapse" id="collapseStatistics">
+            <tabset class="nav nav-tabs nav-justified" role='tablist'>
+                <tab ng-repeat="t in tabs" heading="{{t.heading}}" select="go(t.route)" active="t.active">
+                    <div ui-view>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>
