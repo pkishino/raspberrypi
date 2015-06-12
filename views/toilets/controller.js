@@ -49,7 +49,7 @@ angular.module('cilAssistant').controller('ToiletsCtrl', ['$scope', '$http', '$w
             }).
             error(function (data, status, headers, config) {
                 console.log('Error');
-                $scope.toilets[id - 1] = 'images/toilet_error.png';
+                $scope.toilets[id - 1] = '/views/toilets/images/toilet_error.png';
             });
         }
     }

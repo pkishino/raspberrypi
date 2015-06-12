@@ -1,5 +1,5 @@
 <?php
-// Tell browsers not to cache the file output so we can count all hits
+
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
@@ -19,9 +19,9 @@ try {
     foreach ($value as $row) {
         if ($row['id'] == $tag) {
             if ($row['state'] == 0) {
-                $value = 'images/toilet_green.png';
+                $value = '/views/toilets/images/toilet_green.png';
             } else {
-                $value = 'images/toilet_red.png';
+                $value = '/views/toilets/images/toilet_red.png';
             }
         }
     }
