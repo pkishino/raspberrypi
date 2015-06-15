@@ -42,7 +42,7 @@ def get_config():
 
     Example configuration file contents:
     [rpee]
-    server_url=http://136.225.5.101/toiletdata.php
+    server_url=http://cil-web/views/toilets/toiletdata.php
     sleep_time=2
     resource_dir=/home/epkmann/PycharmProjects/loo_notify/src/resources
 
