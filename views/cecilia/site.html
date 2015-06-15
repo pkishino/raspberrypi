@@ -46,10 +46,10 @@
                 </td>
                 </script>
                 <script type="text/ng-template" id="edit">
-                <td><input class="form-control" type="text" ng-model="model.selected.day" /></td>
-                <td><input class="form-control" type="text" ng-model="model.selected.time" /></td>
-                <td><input class="form-control" type="text" ng-model="model.selected.repeat" /></td>
-                <td><input class="form-control" type="text" ng-model="model.selected.text" /></td>
+                <td><input class="form-control" type="text" ng-model="model.selected.day" placeholder="0"/></td>
+                <td><input class="form-control" type="text" ng-model="model.selected.time" placeholder="00:00"/></td>
+                <td><input class="form-control" type="text" ng-model="model.selected.repeat" placeholder="0"/></td>
+                <td><input class="form-control" type="text" ng-model="model.selected.text" placeholder="Message"/></td>
                 <td>
                     <div class="btn-group" role="group" aria-label="">
                         <button class="btn btn-sm btn-success" ng-click="saveItem($index)">

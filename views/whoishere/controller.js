@@ -92,6 +92,20 @@ angular.module('cilAssistant').controller('WhoIsHereCtrl', ['$scope', '$http', '
                     getTeam();
                 });
             };
+            $scope.removeMember = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'removeMember.html',
+                    controller: 'RemoveMemberModalCtrl',
+                    resolve: {
+                        members: function () {
+                            return $scope.teammembers;
+                        }
+                    }
+                });
+                modalInstance.result.then(function () {
+                    getTeam();
+                });
+            };
 
             $scope.getDiff = function (member) {
                 var diff = moment(member.seen).fromNow(true);
@@ -147,9 +161,9 @@ angular.module('cilAssistant').controller('WhoIsHereCtrl', ['$scope', '$http', '
                     }
                 }).
                 error(function (data, status, headers, config) {
-		    console.log('Error'+data);
+                    console.log('Error' + data);
                     $scope.error = true;
-		    $scope.loading = false;
+                    $scope.loading = false;
                 });
             }
 
@@ -189,5 +203,33 @@ angular.module('cilAssistant').controller('WhoIsHereCtrl', ['$scope', '$http', '
                 }
             }
         }
-    ]);
+    ]).controller('RemoveMemberModalCtrl', ['$scope', '$modalInstance', '$http', 'members',
+        function ($scope, $modalInstance, $http, members) {
+            $scope.teammembers = members;
+            $scope.removeMember = function (member) {
+                removeMember(member);
+            };
+            $scope.exit = function () {
+                $modalInstance.close();
+            };
 
+            function removeMember(member) {
+                $http.get('http://cil-pi/members.php', {
+                    params: {
+                        cmd: 'remove',
+                        name: member.name
+                    }
+                }).
+                success(function (data, status, headers, config) {
+                    var index = $scope.teammembers.indexOf(member);
+                    if (index > -1) {
+                        $scope.teammembers.splice(index, 1);
+                    }
+                }).
+                error(function (data, status, headers, config) {
+                    alert('Error,Could not delete member');
+                    console.log('Error');
+                });
+            }
+        }
+    ]);

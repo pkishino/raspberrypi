@@ -26,6 +26,9 @@
             <button type="button" ng-click="addNewMember()" ng-disabled="loading" class="btn btn-sm btn-success">
             <i class="glyphicon glyphicon-plus"></i> Add new member
             </button>
+            <button type="button" ng-click="removeMember()" ng-disabled="loading" class="btn btn-sm btn-danger">
+            <i class="glyphicon glyphicon-minus"></i> Remove member
+            </button>
         </div>
     </p>
     <script type="text/ng-template" id="newMember.html">
@@ -60,6 +63,32 @@
             <i class="glyphicon glyphicon-ok"></i> OK</button>
             <button class="btn btn-warning" ng-click="cancel()">
             <i class="glyphicon glyphicon-remove"></i> Cancel</button>
+        </div>
+    </div>
+    </script>
+    <script type="text/ng-template" id="removeMember.html">
+    <div class="modal-header">
+        <h1 class="modal-title">Remove member</h1>
+    </div>
+    <div class="modal-body row">
+        <table class="table table-striped">
+            <tbody ng-repeat="member in teammembers">
+                <tr>
+                    <td>
+                        {{member.name}}:{{member.address}}
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger"ng-click="removeMember(member)">
+                            <i class="glyphicon glyphicon-minus"></i>Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <div class="btn-group" role="group" aria-label="">
+            <button class="btn btn-primary" ng-click="exit()">
+            <i class="glyphicon glyphicon-ok"></i> OK</button>
         </div>
     </div>
     </script>
