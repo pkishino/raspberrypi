@@ -47,7 +47,7 @@ def setup_rotate():
             time.sleep(2)
             subprocess.call(
                 ["killall", "-9", "chromium"])
-            for idx, site in enumerate(sites):
+            for idx, site in enumerate(sites,start=0):
                 logger.info("creating:" + site[0])
                 subprocess.Popen(
                     ["chromium", "--kiosk", "{0}"

@@ -36,6 +36,5 @@ def setup_logger(path):
             config.write(configfile)
         logger = get_logger()
         logger.debug('Log initialized and starting in:{0}'.format(log_path))
-        print 'Script logging started in :{0}'.format(log_path)
 
     logger.debug('Existing conf at:{0}'.format(existing_conf))

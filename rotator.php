@@ -11,6 +11,11 @@ if (!file_exists($rotatortext)) {
 if (isset($_REQUEST['cmd'])) {
     $cmd = $_REQUEST['cmd'];
     $refresh = $_REQUEST['refresh'];
+    if ($refresh == 'true'){
+        $refresh = 'yes';
+    }else{
+        $refresh = 'no';
+    }
     $url = $_REQUEST['url'];
 
     if ($fp = @fopen($rotatortext, 'r+')) {
@@ -18,15 +23,20 @@ if (isset($_REQUEST['cmd'])) {
 
         // Lock successful?
         if ($locked) {
-            echo "Updating file now with: " . $text;
+            echo "Updating file now with: " . $url;
             if ($cmd == 'save') {
                 $save = $refresh . ',' . $url . "\n";
                 echo $save;
                 if (isset($_REQUEST['old_refresh'])) {
                     $old_refresh = $_REQUEST['old_refresh'];
+                    if ($old_refresh == 'true'){
+                        $old_refresh = 'yes';
+                    }else{
+                        $old_refresh = 'no';
+                    }
                     $old_url = $_REQUEST['old_url'];
                     $contents = file_get_contents($rotatortext);
-                    $quote = preg_quote($old_refresh . ',"' . $old_url . '"', '/');
+                    $quote = preg_quote($old_refresh . ',' . $old_url, '/');
                     echo $quote;
                     $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', $save, $contents);
                     file_put_contents($rotatortext, $contents);
@@ -35,7 +45,7 @@ if (isset($_REQUEST['cmd'])) {
                 }
             } elseif ($cmd == 'delete') {
                 $contents = file_get_contents($rotatortext);
-                $quote = preg_quote($refresh . ',"' . $url . '"', '/');
+                $quote = preg_quote($refresh . ',' . $url, '/');
                 echo $quote;
                 $contents = preg_replace('/^.*?' . $quote . '.*\n?/m', '', $contents);
                 echo $contents;
