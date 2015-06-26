@@ -6,7 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 import runner
 
-breakfast_file = '/var/www/toiletsite/logs/breakfast.txt'
+breakfast_file = '/var/www/toiletsite/views/breakfast/breakfast.txt'
 Member = namedtuple('Member', 'name week email')
 server_email = 'cil-breakfast-reminder@ericsson.com'
 msg = MIMEText(
